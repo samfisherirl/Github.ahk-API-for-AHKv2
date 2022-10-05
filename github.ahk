@@ -3,9 +3,9 @@
 ; credit to https://github.com/kurtmckee/ahk_json 
 class Github {
     __New(Repo) {
-      ar := []
+        Ar := []
         Ar := StrSplit(Repo, "/")
-
+        
         url := "https://api.github.com/repos/" Repo "/releases/latest"
         urlDownloadToFile, %url%, 1.json
         sleep, 50
@@ -21,27 +21,27 @@ class Github {
         return this.Down
     }
     name() {
-      return this.asset
+        return this.asset
     }
     getFiletype() {
-      Array := StrSplit(this.down, ".")
-      indx:=Array.MaxIndex()
-      filetype:=Array[indx]
-      return filetype
+        Array := StrSplit(this.down, ".")
+        indx:=Array.MaxIndex()
+        filetype:=Array[indx]
+        return filetype
     }
     tag() {
-      url := StrSplit(this.Vers,"/")
-      tag := url[8]
-      return tag
-       ; msgbox % this.j[1].assets.name
-       ; return this.j[1].assets.name
+        url := StrSplit(this.Vers,"/")
+        tag := url[8]
+        return tag
+        ; msgbox % this.j[1].assets.name
+        ; return this.j[1].assets.name
     }
     DL(File) {
-      x := this.getFiletype()
-      ext := File "." x
-      url := this.release() 
-      UrlDownloadToFile, %url%, %ext%
-      return  comb
+        x := this.getFiletype()
+        ext := File "." x
+        url := this.release() 
+        UrlDownloadToFile, %url%, %ext%
+        return  comb
     }
 }
 
