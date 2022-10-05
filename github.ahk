@@ -1,4 +1,6 @@
- 
+
+; credit to https://github.com/clangremlini/OTA.ahk 
+; credit to https://github.com/kurtmckee/ahk_json 
 class Github {
     __New(Repo) {
       ar := []

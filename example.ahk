@@ -4,6 +4,9 @@ setworkingdir, %A_ScriptDir%
 #SingleInstance, force
 #NoEnv
 
+; credit to https://github.com/clangremlini/OTA.ahk 
+; credit to https://github.com/kurtmckee/ahk_json
+
 rep := "samfisherirl/Geo3D_Manager"
 ;        username   /   repository
 
