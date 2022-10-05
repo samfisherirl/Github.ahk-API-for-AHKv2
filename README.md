@@ -3,19 +3,18 @@ Github.ahk - Download latest releases from repositories
 
 `rep := "samfisherirl/Geo3D_Manager"`
 
-`;        username   /   repository`
+;        username   /   repository
 
 
 `git := new Github(rep)`
 
-`;object :=  class(variable)`
-
+;object :=  class(variable)
 
 `git.DL("geo")`
 
-`; downloads latest release as "geo.7z" accounting for variable extension`
+; downloads latest release as "geo.7z" accounting for variable extension
 
-`; (geo can be replaced with any name)`
+; (geo can be replaced with any name)
 
 
 `releasename := git.name()`
@@ -36,15 +35,15 @@ Github.ahk - Download latest releases from repositories
  
 ; long version of above dl option
 
-;         you need the proper extension ^     
+;you need the proper extension ^     
 
 
-;    Return URL of Latest Release Version
+;Return URL of Latest Release Version
 
 `msgbox % git.release()`
  
  
-;    return version of latest release tag
+;return version of latest release tag
 
 `msgbox % git.tag()`
 
