@@ -37,7 +37,7 @@
         }
         DL(Name) {
             x := this.zipORexe()
-            ext := File "." x
+            ext := Name "." x
             url := this.release()
             UrlDownloadToFile, %url%, %ext%
             if !InStr(ext, ":\")
