@@ -27,6 +27,13 @@
 
         git.DL(file_to_Save)
         ;git.DL("geo") 
+        
+       ;Function example
+      path := A_DesktopCommon
+      GitDownload("samfisherirl","Geo3D_Manager", Path)
+      ; msgbox % file_to_Save
+      ; returns file name
+
 
         ; msgbox % file_to_Save
         ; returns file name
