@@ -13,7 +13,7 @@ rep := "samfisherirl/Geo3D_Manager"
 git := new Github(rep)
 ;object :=  new class(username"/"repository)
 
-git.DL("geo")
+git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
 
 ; "geo" is the file name of the latest release, extension is grabbed after download and push to working dir.
 

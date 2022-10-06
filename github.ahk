@@ -46,13 +46,12 @@ class Github {
     }
 }
 
-
 GitDownload(Username, Repository_Name, Path_To_Save_DL)
 {
-  ;GitDownload("samfisherirl","Geo3D_Manager", Path)
-  UR := Username "\" Repository_Name
-  Path_To_Save_DL := Path_To_Save_DL "\" git.name()
-  gitfunc := new Github(UR)
-  gitfunc.DL(Path_To_Save_DL)
+    ;GitDownload("samfisherirl","Geo3D_Manager", Path)
+    UR := Username "\" Repository_Name
+    Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+    gitfunc := new Github(UR)
+    gitfunc.DL(Path_To_Save_DL)
 }
 
