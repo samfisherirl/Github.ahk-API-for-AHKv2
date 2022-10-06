@@ -1,4 +1,4 @@
-# Download latest releases from github with Objects
+# Download latest releases from github with Objects or function
 
 <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="githubahk_0"></a>github.ahk</h1>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
