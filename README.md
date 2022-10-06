@@ -4,6 +4,12 @@
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 #Include Github.ahk - Download latest releases from repositories</p>
 
+
+gui isnt necessary but this is all an exorsize for the most part. 
+
+![image](https://user-images.githubusercontent.com/98753696/194333168-3e322b62-af10-4a2b-bf07-b29785f123ee.png)
+
+
 #Include Json.ahk
 #Include github.ahk
 setworkingdir, %A_ScriptDir%
