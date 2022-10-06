@@ -35,15 +35,21 @@ same as git.DL("geo") except choose the directory, using the git.name() object t
 git.DL("geo") 
 
 Function example
+
         path := A_DesktopCommon
+
         GitDownload("samfisherirl","Geo3D_Manager", Path)
+
 msgbox % file_to_Save
+
 returns file name
 
    Return URL of Latest Release Version
+
         msgbox % git.release()
 
    return version of latest release tag
+
         msgbox % git.tag()
 
         msgbox % git.name()
