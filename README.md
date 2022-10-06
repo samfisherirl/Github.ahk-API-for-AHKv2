@@ -22,7 +22,8 @@
 
         file_to_Save := A_AppDataCommon "\" releasename
         ;same as git.DL("geo") except choose the directory, using the git.name() 
-        ;object to grab the release file name, including extension and version data like "geo.v1.1.zip"  
+        ;object to grab the release file name, 
+        ;including extension and version data like "geo.v1.1.zip"  
 
         git.DL(file_to_Save)
         ;git.DL("geo") 
