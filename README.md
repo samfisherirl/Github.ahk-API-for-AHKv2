@@ -17,7 +17,7 @@ setworkingdir, %A_ScriptDir%
  username   /   repository
 
         git := new Github(rep)
-        ;object :=  new class(username"/"repository)
+        ;object :=  new github(username"/"repository)
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
 
