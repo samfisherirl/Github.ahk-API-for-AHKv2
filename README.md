@@ -14,16 +14,19 @@ credit to https://github.com/clangremlini/OTA.ahk
         ;object :=  new class(username"/"repository)
 
         git.DL("geo")
-        ; "geo" is the file name of the latest release, extension is  
-        ; grabbed after download and push to working dir.
+"geo" is the file name of the latest release, extension is  
 
-        ; optional: choose local directory with next example
+grabbed after download and push to working dir.
+
+optional: choose local directory with next example
 
         releasename := git.name()   
 
         file_to_Save := A_AppDataCommon "\" releasename
 same as git.DL("geo") except choose the directory, using the git.name() 
+
 object to grab the release file name, 
+
 including extension and version data like "geo.v1.1.zip"  
 
         git.DL(file_to_Save)
