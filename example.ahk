@@ -29,11 +29,20 @@ log := A_ScriptDir "\log.txt"
 ;send log.txt to appdata   
 
 git.upd(log)
+;if log.txt is not empty, 
+;and if version in log (v1.2) < (v1.3)
+;downloads latest release  
 
+;only check for update
+if (git.checkupd(log)=1)
+{
+    msgbox you need an update! `nI will store version in %log% for when you check`n for an update, next time! 
+    git.dlupdate(log)
+}
 ; alternately
 ;git.upd("")
 
-; "geo" is the file name of the latest release, extension is grabbed after download and push to working dir.
+; "geo" is the file e latest release, extension is grabbed after download and push to working dir.name of th
 
 ; optional: choose local directory with next example
 
