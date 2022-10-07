@@ -5,8 +5,11 @@
 #Include Github.ahk - Download latest releases from repositories</p>
 
 
-gui isnt necessary but this is all an exorcize  for the most part. 
+gui isnt necessary but this is all an exercise  for the most part. 
 
+        git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
+        
+        
 ![image](https://user-images.githubusercontent.com/98753696/194333168-3e322b62-af10-4a2b-bf07-b29785f123ee.png)
 
 
