@@ -12,11 +12,7 @@ gui isnt necessary but this is all an exercise  for the most part.
         
 ![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
-#Include Json.ahk
-#Include github.ahk
-setworkingdir, %A_ScriptDir%
-#SingleInstance, force
-    #NoEnv
+ 
 
       credit to https://github.com/clangremlini/OTA.ahk 
       credit to https://github.com/kurtmckee/ahk_json
