@@ -26,6 +26,17 @@ object :=  new github(username"/"repository)
 
 "geo" is the file name of the latest release, extension is grabbed after download and push to working dir.
 
+`log := A_ScriptDir "\log.txt"`
+;designate a log location, 
+;otherwise the script will 
+;send log.txt to appdata   
+
+`git.upd(log)`
+
+; alternately
+;git.upd("")
+
+
 optional: choose local directory with next example
 
         releasename := git.name()   
