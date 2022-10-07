@@ -14,10 +14,15 @@ class Github {
         this.DLUrl := data["assets"][1]["browser_download_url"]
         this.Asset := data["assets"][1]["name"]
         this.Vers := data["html_url"]
+        this.tagname := data["tag_name"]
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
     release() {
         return this.DLUrl
+    }
+
+    tagname() {
+      return this.tagname
     }
     name() {
         return this.asset
@@ -46,10 +51,10 @@ class Github {
     }
 }
 
-GitDownload(Username, Repository_Name, Path_To_Save_DL)
+GitDownload(github_Username, Repository_Name, Path_To_Save_DL)
 {
     ;GitDownload("samfisherirl","Geo3D_Manager", Path)
-    UR := Username "\" Repository_Name
+    UR := github_Username "\" Repository_Name
     Path_To_Save_DL := Path_To_Save_DL "\" git.name()
     gitfunc := new Github(UR)
     gitfunc.DL(Path_To_Save_DL)

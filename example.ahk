@@ -15,6 +15,14 @@ setworkingdir, %A_ScriptDir%
       git := new Github(rep)
       ;object :=  new Github(username"/"repository)
 
+      log := A_AppDataCommom "\log.txt"
+      if (git.checkupd(log) = 1)
+      {
+        git.doupdate(log)
+      }
+
+
+      /*
       git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
 
       ; "geo" is the file name of the latest release, extension is grabbed after download and push to working dir.
