@@ -14,15 +14,11 @@ class Github {
         this.DLUrl := data["assets"][1]["browser_download_url"]
         this.Asset := data["assets"][1]["name"]
         this.Vers := data["html_url"]
-        this.tagname := data["tag_name"]
+        this.body := data["body"]
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
     release() {
         return this.DLUrl
-    }
-
-    tagname() {
-      return this.tagname
     }
     name() {
         return this.asset
@@ -49,14 +45,54 @@ class Github {
             ext := A_ScriptDir . "\" . ext
         return ext
     }
-}
 
-GitDownload(github_Username, Repository_Name, Path_To_Save_DL)
-{
-    ;GitDownload("samfisherirl","Geo3D_Manager", Path)
-    UR := github_Username "\" Repository_Name
-    Path_To_Save_DL := Path_To_Save_DL "\" git.name()
-    gitfunc := new Github(UR)
-    gitfunc.DL(Path_To_Save_DL)
-}
+    checkupd(log) {
+      If (log = "") {
+          log := A_AppDataCommom "\log.txt"
+      }
+      loop, read, %log%
+      {
+          if (A_LoopReadLine != "") {
+            vers := StrSplit(A_LoopReadLine, ",")
+              vers:=vers[2]
+              break
+          }
+      }
+      if instr(vers, this.tag())
+      {
+          return 0
+      }
+      else
+          return 1
+  }
+  dlupdate(log) {
+      this.DL(this.name())
+      tag:=this.tag()
+      
+      fileappend, 
+      (C LTrim
+      ,%tag%,
+      ), 1og.txt
+      filemove, 1og.txt, %log%, 1
+  }
+  upd(log) {
+      if (this.checkupd(log) = 1)
+      {
+          this.dlupdate(log) ;downloads if vers/log
+      }
+  }
+     
+  }
+    
+    GitDownload(Username, Repository_Name, Path_To_Save_DL)
+    {
+        ;GitDownload("samfisherirl","Geo3D_Manager", Path)
+        UR := Username "\" Repository_Name
+        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+        gitfunc := new Github(UR)
+        gitfunc.DL(Path_To_Save_DL)
+    }
+  class Update
+  {
 
+    }

@@ -9,44 +9,52 @@ setworkingdir, %A_ScriptDir%
 
 ;download the latest release from github with "git := new Github(rep)"
 
-      rep := "samfisherirl/Geo3D_Manager"
-      ;        username   /   repository
+git := new Github("samfisherirl/Geo3D_Manager")
+;objectname :=  new Github(username"/"repository)
 
-      git := new Github(rep)
-      ;object :=  new Github(username"/"repository)
+;alternately
+rep := "samfisherirl/Geo3D_Manager"
+;        username   /   repository
+git := new Github(rep)
 
-      log := A_AppDataCommom "\log.txt"
-      if (git.checkupd(log) = 1)
-      {
-        git.doupdate(log)
-      }
+git.DL("geo") ; downloads the latest release, 
+;saving to "geo.zip" relative path
 
+; alternately
+;
 
-      /*
-      git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
+log := A_ScriptDir "\log.txt"
+;designate a log location, 
+;otherwise the script will 
+;send log.txt to appdata   
 
-      ; "geo" is the file name of the latest release, extension is grabbed after download and push to working dir.
+git.upd(log)
 
-      ; optional: choose local directory with next example
+; alternately
+;git.upd("")
 
-      releasename := git.name()   
+; "geo" is the file name of the latest release, extension is grabbed after download and push to working dir.
 
-      file_to_Save := A_AppDataCommon "\" releasename
-      ;same as git.DL("geo") except choose the directory, using the git.name() object to grab the release file name, including extension and version data like "geo.v1.1.zip"  
+; optional: choose local directory with next example
 
-      git.DL(file_to_Save)
-      ;git.DL("geo") 
+releasename := git.name()   
 
-      ;Function example
-      path := A_DesktopCommon
-      GitDownload("samfisherirl","Geo3D_Manager", Path)
-      ; msgbox % file_to_Save
-      ; returns file name
+file_to_Save := A_AppDataCommon "\" releasename
+;same as git.DL("geo") except choose the directory, using the git.name() object to grab the release file name, including extension and version data like "geo.v1.1.zip"  
 
-      ;    Return URL of Latest Release Version
-      msgbox % git.release()
+git.DL(file_to_Save)
+;git.DL("geo") 
 
-      ;    return version of latest release tag
-      msgbox % git.tag()
+;Function example
+path := A_DesktopCommon
+GitDownload("samfisherirl","Geo3D_Manager", Path)
+; msgbox % file_to_Save
+; returns file name
 
-      msgbox % git.name()
+;    Return URL of Latest Release Version
+msgbox % git.release()
+
+;    return version of latest release tag
+msgbox % git.tag()
+
+msgbox % git.name()
