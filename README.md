@@ -10,8 +10,7 @@ gui isnt necessary but this is all an exercise  for the most part.
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
         
-![image](https://user-images.githubusercontent.com/98753696/194333168-3e322b62-af10-4a2b-bf07-b29785f123ee.png)
-
+![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
 
 ; credit to https://github.com/clangremlini/OTA.ahk 
