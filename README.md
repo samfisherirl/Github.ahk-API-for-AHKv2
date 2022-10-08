@@ -13,6 +13,10 @@ gui isnt necessary but this is all an exercise  for the most part.
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
+        function example:
+        
+        GitDownload("samfisherirl","github.ahk", Path)
+        
  if you want to store version tag in log, use this instead. It will check for log, store version, only download if version != log...
         
         log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
@@ -67,7 +71,7 @@ gui isnt necessary but this is all an exercise  for the most part.
 
      Function example
 `path := A_DesktopCommon`
-`GitDownload("samfisherirl","Geo3D_Manager", Path)`
+``
       msgbox % file_to_Save
       returns file name
 
