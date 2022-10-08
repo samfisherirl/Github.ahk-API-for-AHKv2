@@ -7,6 +7,8 @@
 
 gui isnt necessary but this is all an exercise  for the most part. 
 
+        git := new Github("samfisherirl/Geo3D_Manager") 
+
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
         
