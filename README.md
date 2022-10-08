@@ -4,11 +4,22 @@
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 #Include Github.ahk - Download latest releases from repositories</p>
 
+also #Include Json.ahk https://github.com/kurtmckee/ahk_json
+
 
 gui isnt necessary but this is all an exercise  for the most part. 
 
+        git := new Github("username/repository") 
+
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
+ if you want to store version tag in log, use this instead. It will check for log, store version, only download if version != log...
+        
+        log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
+
+        git.upd(log)
+
+
         
 ![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
@@ -16,10 +27,9 @@ gui isnt necessary but this is all an exercise  for the most part.
 
       credit to https://github.com/clangremlini/OTA.ahk 
       credit to https://github.com/kurtmckee/ahk_json
+ 
 
-     download the latest release from github with "git := new Github(rep)"
-
-`git := new Github("samfisherirl/Geo3D_Manager")`
+     `git := new Github("samfisherirl/Geo3D_Manager")`
      objectname :=  new Github(username"/"repository)
 
      alternately
@@ -41,11 +51,11 @@ gui isnt necessary but this is all an exercise  for the most part.
 `git.upd(log)`
 
       alternately
-     git.upd("")
+ `git.upd("")`
 
-      "geo" is the file name of the latest release, extension is `grabbed after download and push to working dir.`
+ "geo" is the file name of the latest release, extension is `grabbed after download and push to working dir.`
 
-      optional: choose local directory with next example
+ optional: choose local directory with next example
 
 `releasename := git.name()`
 

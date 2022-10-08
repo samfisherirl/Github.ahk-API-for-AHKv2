@@ -51,8 +51,8 @@ getcontrol()
 
 Class Code {
     __New(array) {
-        this.repo := array[1]
-        this.user := array[2]
+        this.repo := array[2]
+        this.user := array[1]
         this.drop := array[3]
         this.file := array[4]
         this.updt := array[5]
