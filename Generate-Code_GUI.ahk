@@ -19,8 +19,17 @@ Gui Show, w369 h350, Use AHK to download Github Latest Releases
 Return
 
 go:
-    getcontrol()
-    DisplayLog(obj.full(), obj.req())  
+    loop, 5
+    {
+      getcontrol()
+      if (obj.full()="")
+      {
+        sleep 500
+        continue
+      }
+      else        
+          DisplayLog(obj.full(), obj.req())  
+    }
 Return
 
 run:
@@ -28,18 +37,18 @@ run:
     txt := obj.full()
     FileAppend, 
     (C LTrim
-
+    
     %txt%
     
-  ), run.txt 
+    ), run.txt 
     filemove, run.txt, run.ahk, 1
     run, run.ahk, %A_ScriptDir%
-    
+    reload
 Return
 
 getcontrol()
 {
-  global
+    global
     GuiControlGet, repository
     GuiControlGet, username
     GuiControlGet, file
@@ -51,14 +60,14 @@ getcontrol()
 
 Class Code {
     __New(array) {
-        this.repo := array[2]
-        this.user := array[1]
+        this.repo := array[1]
+        this.user := array[2]
         this.drop := array[3]
         this.file := array[4]
         this.updt := array[5]
     }
     combine() {
-        rep := `"""" this.repo "/" this.user `"""" 
+        rep := `"""" this.user "/" this.repo `"""" 
         return rep
     } 
     
@@ -71,19 +80,27 @@ Class Code {
             #NoEnv
         
         )
-        return val
+        return val 
     }
     update() {
         if (this.updt=1)
         {
             scriptupdater=
             (C LTrim                
-            
-            
-            log := A_ScriptDir "\log.txt"
+                        
+            log := A_Appdatacommon "\log.txt"
             ;designate a log location, otherwise the script will send log.txt to appdata   
             
+            ;stores log info, only downloads if log has vers < latest
             git.upd(log)
+            )
+        }
+        else
+        {
+            script:=this.file
+            scriptupdater=
+            (C LTrim              
+            git.DL("%script%") 
             )
         }
         return scriptupdater
@@ -91,7 +108,7 @@ Class Code {
     
     req() {
         file :=  this.combine()
-        script := this.file
+        script := this.file()
         log := this.update()
         necessary= 
         (C LTrim
@@ -100,8 +117,7 @@ Class Code {
         repos := %File%
         git := new Github(repos)
         
-        ;starts downloading github release
-        git.DL("%script%") %log%
+        %log%
         )
         return necessary 
     }
