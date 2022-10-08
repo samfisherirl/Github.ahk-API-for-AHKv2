@@ -7,7 +7,7 @@
 
 gui isnt necessary but this is all an exercise  for the most part. 
 
-        git := new Github("samfisherirl/Geo3D_Manager") 
+        git := new Github("username/repository") 
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
@@ -18,10 +18,9 @@ gui isnt necessary but this is all an exercise  for the most part.
 
       credit to https://github.com/clangremlini/OTA.ahk 
       credit to https://github.com/kurtmckee/ahk_json
+ 
 
-     download the latest release from github with "git := new Github(rep)"
-
-`git := new Github("samfisherirl/Geo3D_Manager")`
+     `git := new Github("samfisherirl/Geo3D_Manager")`
      objectname :=  new Github(username"/"repository)
 
      alternately
