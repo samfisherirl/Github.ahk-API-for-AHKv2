@@ -11,7 +11,7 @@ gui isnt necessary but this is all an exercise  for the most part.
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
-        store in log             
+ if you want to store version tag in log, use this instead...
         
         log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
 
