@@ -42,11 +42,11 @@ gui isnt necessary but this is all an exercise  for the most part.
 `git.upd(log)`
 
       alternately
-     git.upd("")
+ `git.upd("")`
 
-      "geo" is the file name of the latest release, extension is `grabbed after download and push to working dir.`
+ "geo" is the file name of the latest release, extension is `grabbed after download and push to working dir.`
 
-      optional: choose local directory with next example
+ optional: choose local directory with next example
 
 `releasename := git.name()`
 
