@@ -11,6 +11,13 @@ gui isnt necessary but this is all an exercise  for the most part.
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
         
+        store in log             
+        
+        log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
+
+        git.upd(log)
+
+
         
 ![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
