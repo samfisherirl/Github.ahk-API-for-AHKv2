@@ -37,14 +37,18 @@ credit to https://github.com/kurtmckee/ahk_json
            objectname :=  new Github(username"/"repository)
 
 alternately
-         rep := "samfisherirl/Geo3D_Manager"`
-                     username   /   repository
-         git := new Github(rep)`
+
+         rep := "samfisherirl/Geo3D_Manager"
+         
+username   /   repository
+
+         git := new Github(rep) 
 
          git.DL("geo")` ; downloads the latest release, 
-             saving to "geo.zip" relative path
+         
+saving to "geo.zip" relative path
 
-      alternately
+alternately
      
 
         log := A_ScriptDir "\log.txt"
