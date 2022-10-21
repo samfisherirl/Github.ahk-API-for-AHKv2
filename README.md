@@ -73,14 +73,15 @@ send log.txt to appdata
         git.DL(file_to_Save) 
         git.DL("geo") 
 
-     Function example
+ Function example
         path := A_DesktopCommon 
  
-      msgbox % file_to_Save
+       msgbox % file_to_Save
+
 returns file name
 
 Return URL of Latest Release Version
-        msgbox % git.release() 
+         msgbox % git.release() 
 
  return version of latest release tag
         msgbox % git.tag() 
