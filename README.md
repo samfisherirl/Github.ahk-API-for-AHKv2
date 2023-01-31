@@ -4,9 +4,11 @@
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 #Include Github.ahk - Download latest releases from repositories</p>
 
-also #Include Json.ahk https://github.com/kurtmckee/ahk_json
+#Include Json.ahk https://github.com/kurtmckee/ahk_json
 
-Github.ahk - Modular Library to Download latest releases from github api and check version 
+A Modular Library to Download latest releases from github api and check version.
+
+How to initiate:
 
         git := new Github("username/repository") 
 
