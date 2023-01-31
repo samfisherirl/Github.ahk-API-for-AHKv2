@@ -2,7 +2,7 @@
 
 <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="githubahk_0"></a>github.ahk</h1>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
-#Include Github.ahk - Download latest releases from repositories</p>
+#Include Github.ahk
 
 #Include Json.ahk https://github.com/kurtmckee/ahk_json
 
