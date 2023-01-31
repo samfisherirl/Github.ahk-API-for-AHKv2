@@ -16,7 +16,10 @@ To initiate, you can download the latest release which generates code from a GUI
         
 How to download latest github release:
         
-        git := new Github("username/repository") ; instantiate the object
+        git := new Github("username/repository") ;instantiate the object
+        
+        anyname := new Github("any_username/any_repo") 
+        
         
         git := new Github("samfisherirl/github.ahk") ; example using this repository
 
