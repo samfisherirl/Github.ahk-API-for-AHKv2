@@ -16,11 +16,11 @@ To initiate, you can download the latest release which generates code from a GUI
         
 How to download latest github release:
         
-        git := new Github("username/repository") 
+        git := new Github("username/repository") ; instantiate the object
         
         git := new Github("samfisherirl/github.ahk") ; example using this repository
 
-        git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
+        git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
         
         function example:
         
