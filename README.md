@@ -8,7 +8,10 @@
 
 A Modular Library to Download latest releases from github api and check version.
 
-To initiate, you can download the latest release which generates code from a GUI, or see:
+To initiate, you can download the latest release which generates code from a GUI, or see below image.
+        
+        
+![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
         git := new Github("username/repository") 
 
@@ -26,7 +29,6 @@ To initiate, you can download the latest release which generates code from a GUI
 
 
         
-![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
  
 
