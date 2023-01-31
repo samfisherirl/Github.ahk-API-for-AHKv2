@@ -8,7 +8,7 @@
 
 A Modular Library to Download latest releases from github api and check version.
 
-How to initiate:
+To initiate, you can download the latest release which generates code from a GUI, or see:
 
         git := new Github("username/repository") 
 
