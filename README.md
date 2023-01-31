@@ -13,6 +13,9 @@ To initiate, you can download the latest release which generates code from a GUI
         
 ![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
+        
+How to download latest github release:
+        
         git := new Github("username/repository") 
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path
