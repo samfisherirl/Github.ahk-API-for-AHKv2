@@ -6,8 +6,7 @@
 
 also #Include Json.ahk https://github.com/kurtmckee/ahk_json
 
-
-gui isnt necessary but this is all an exercise  for the most part. 
+Github.ahk - Modular Library to Download latest releases from github api and check version 
 
         git := new Github("username/repository") 
 
