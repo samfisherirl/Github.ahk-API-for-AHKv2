@@ -20,7 +20,6 @@ How to download latest github release:
         
         anyname := new Github("any_username/any_repo") 
         
-        
         git := new Github("samfisherirl/github.ahk") ; example using this repository
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
