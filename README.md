@@ -15,7 +15,9 @@ To initiate, you can download the latest release which generates code from a GUI
 
         
 How to download latest github release:
-                
+        
+        
+        using this url as an example: https://github.com/samfisherirl/github.ahk
         function example:
         
         GitDownload("samfisherirl","github.ahk", Path)
