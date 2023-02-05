@@ -15,6 +15,12 @@ To initiate, you can download the latest release which generates code from a GUI
 
         
 How to download latest github release:
+                
+        function example:
+        
+        GitDownload("samfisherirl","github.ahk", Path)
+
+        object: 
         
         git := new Github("username/repository") ;instantiate the object
         
@@ -23,10 +29,7 @@ How to download latest github release:
         git := new Github("samfisherirl/github.ahk") ; example using this repository
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
-        
-        function example:
-        
-        GitDownload("samfisherirl","github.ahk", Path)
+
         
  if you want to store version tag in log, use this instead. It will check for log, store version, only download if version != log...
         
