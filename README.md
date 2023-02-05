@@ -18,6 +18,7 @@ How to download latest github release:
         
         
         using this url as an example: https://github.com/samfisherirl/github.ahk
+
         function example:
         
         GitDownload("samfisherirl","github.ahk", Path)
@@ -25,12 +26,13 @@ How to download latest github release:
         object: 
         
         git := new Github("username/repository") ;instantiate the object
+
+
+        git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
         
         anyname := new Github("any_username/any_repo") 
         
         git := new Github("samfisherirl/github.ahk") ; example using this repository
-
-        git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
 
         
  if you want to store version tag in log, use this instead. It will check for log, store version, only download if version != log...
