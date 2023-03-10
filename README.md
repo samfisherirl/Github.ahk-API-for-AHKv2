@@ -17,6 +17,8 @@ A Modular Library to Download latest releases from github api and check version.
 To initiate, you can download the latest release which generates code from a GUI, or see below image.
 
 Quick function list:
+    ;using this url as an example
+    ;https://github.com/samfisherirl/github.ahk
  
     path := A_Desktop
 
