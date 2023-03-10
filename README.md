@@ -45,18 +45,13 @@ Quick function list:
 
 
         
-![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
         
 How to download latest github release:
         
         
         using this url as an example: https://github.com/samfisherirl/github.ahk
-
-        function example:
-        
-        GitDownload("samfisherirl","github.ahk", Path)
-
+ 
         object: 
         
         git := new Github("username/repository") ;instantiate the object
@@ -74,15 +69,16 @@ How to download latest github release:
         log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
 
         git.upd(log)
-
-
-        
-
  
 
 credit to https://github.com/clangremlini/OTA.ahk 
 credit to https://github.com/kurtmckee/ahk_json
  
+Gui built for generating code in object form:
+
+
+![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
+
 
         git := new Github("samfisherirl/Geo3D_Manager")
            objectname :=  new Github(username"/"repository)
