@@ -1,6 +1,6 @@
-Github.ahk 
+<h1>Github.ahk</h1>
 
-<h2>Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated. </h2>
+<h3>Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated. </h3>
 
 # 
 
