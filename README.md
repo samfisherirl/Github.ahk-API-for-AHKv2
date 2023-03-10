@@ -1,12 +1,11 @@
-#Github.ahk 
+Github.ahk 
 
-<h5>Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated. </h5>
+<h2>Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated. </h2>
 
 # 
 
 A Modular Library to Download latest releases from github api and check version.
 
-<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="githubahk_0"></a>github.ahk</h1>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 
 #Include Json.ahk https://github.com/kurtmckee/ahk_json
