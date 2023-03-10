@@ -72,11 +72,6 @@ How to download latest github release:
 
 #
  
- if you want to store version tag in log, use this instead. It will check for log, store version, only download if version != log...
-        
-        log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
-
-        git.upd(log)
  
  
 Gui built for generating code in object form:
@@ -84,17 +79,4 @@ Gui built for generating code in object form:
 
 ![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
-alternately
-
-        git := new Github("samfisherirl/Geo3D_Manager")
-           objectname :=  new Github(username"/"repository)
-
-
-         rep := "samfisherirl/Geo3D_Manager"
-         
-username   /   repository
-
-         git := new Github(rep) 
-
-         git.DL("geo")` ; downloads the latest release, 
  
