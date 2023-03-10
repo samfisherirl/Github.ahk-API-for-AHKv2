@@ -12,7 +12,7 @@ To initiate, you can download the latest release which generates code from a GUI
 
 Quick function list:
  
- path := A_Desktop
+    path := A_Desktop
 
     Username := "samfisherirl"
     Repo := "github.ahk"
