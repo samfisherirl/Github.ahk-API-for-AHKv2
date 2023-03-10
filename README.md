@@ -1,10 +1,11 @@
 <h1>Github.ahk</h1>
 
-<h3>Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated. </h3>
+<h3>
+A Modular Library to Download latest releases from github api and check version. </h3>
 
 # 
 
-A Modular Library to Download latest releases from github api and check version.
+Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated.
 
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 
