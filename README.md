@@ -21,11 +21,7 @@ Quick function list:
  
     #include json.ahk
     #include github.ahk
-    ;using this url as an example
-    ;https://github.com/samfisherirl/github.ahk
  
-    path := A_Desktop
-
     Username := "samfisherirl"
     Repo := "github.ahk"
 
@@ -47,7 +43,6 @@ Quick function list:
     )
 
     msgbox, %message%
-
 
     GitDownload("samfisherirl","github.ahk", Path)
     msgbox, Download Finished! 
