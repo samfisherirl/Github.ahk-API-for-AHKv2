@@ -46,7 +46,7 @@ Quick function list:
  
  ![image](https://user-images.githubusercontent.com/98753696/224391018-7596576e-e988-4d46-9242-33a667654ed5.png)
 
-
+#
 
         
 
@@ -67,7 +67,8 @@ How to download latest github release:
         
         git := new Github("samfisherirl/github.ahk") ; example using this repository
 
-        
+#
+ 
  if you want to store version tag in log, use this instead. It will check for log, store version, only download if version != log...
         
         log := A_ScriptDir "\log.txt" designate a log location, otherwise the script will send log.txt to appdata
