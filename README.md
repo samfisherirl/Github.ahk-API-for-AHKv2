@@ -7,6 +7,8 @@
 #Include Json.ahk https://github.com/kurtmckee/ahk_json
 
 A Modular Library to Download latest releases from github api and check version.
+ 
+3/10/23 update: Additional functions for easy use, added and tested. 
 
 To initiate, you can download the latest release which generates code from a GUI, or see below image.
 
