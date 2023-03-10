@@ -23,6 +23,9 @@ class Github {
     name() {
         return this.asset
     }
+    details(){
+      return this.body
+    }
     zipORexe() {
         Array := StrSplit(this.DLUrl, ".")
         indx:=Array.MaxIndex()
@@ -88,9 +91,42 @@ class Github {
     {
         ;GitDownload("samfisherirl","Geo3D_Manager", Path)
         UR := Username "\" Repository_Name
-        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+        Path_To_Save_DL := Path_To_Save_DL "\" Repository_Name
         gitfunc := new Github(UR)
         gitfunc.DL(Path_To_Save_DL)
+    }
+    
+    GitGetVersion(Username, Repository_Name)
+    {
+        ;GitDownload("samfisherirl","Geo3D_Manager", Path)
+        UR := Username "\" Repository_Name
+        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+        gitfunc := new Github(UR)
+        return gitfunc.tag()
+    }
+    GitGetAsset(Username, Repository_Name)
+    {
+        ;GitDownload("samfisherirl","Geo3D_Manager", Path)
+        UR := Username "\" Repository_Name
+        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+        gitfunc := new Github(UR)
+        return gitfunc.asset
+    }
+    GitGetReleaseUrl(Username, Repository_Name)
+    {
+        ;GitDownload("samfisherirl","Geo3D_Manager", Path)
+        UR := Username "\" Repository_Name
+        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+        gitfunc := new Github(UR)
+        return gitfunc.release()
+    }
+    GitGetUpdateDetails(Username, Repository_Name)
+    {
+        ;GitDownload("samfisherirl","Geo3D_Manager", Path)
+        UR := Username "\" Repository_Name
+        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
+        gitfunc := new Github(UR)
+        return gitfunc.details()
     }
   class Update
   {
