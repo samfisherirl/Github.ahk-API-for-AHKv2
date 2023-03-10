@@ -1,7 +1,7 @@
 <h1>Github.ahk</h1>
 
 <h3>
-A Modular Library to Download latest releases from github api and check version. </h3>
+A Modular Library to Download latest releases from the github API, among other github timesavers. </h3>
 
 # 
 
