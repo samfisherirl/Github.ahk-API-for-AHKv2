@@ -86,7 +86,14 @@ class Github {
   }
      
   }
-    
+
+class Git {
+
+
+
+  }
+
+  
     GitDownload(Username, Repository_Name, Path_To_Save_DL)
     {
         ;GitDownload("samfisherirl","Geo3D_Manager", Path)
@@ -100,32 +107,32 @@ class Github {
     {
         ;GitDownload("samfisherirl","Geo3D_Manager", Path)
         UR := Username "\" Repository_Name
-        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
         gitfunc := new Github(UR)
+        Path_To_Save_DL := Path_To_Save_DL "\" gitfunc.name()
         return gitfunc.tag()
     }
     GitGetAsset(Username, Repository_Name)
     {
         ;GitDownload("samfisherirl","Geo3D_Manager", Path)
         UR := Username "\" Repository_Name
-        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
         gitfunc := new Github(UR)
+        Path_To_Save_DL := Path_To_Save_DL "\" gitfunc.name()
         return gitfunc.asset
     }
     GitGetReleaseUrl(Username, Repository_Name)
     {
         ;GitDownload("samfisherirl","Geo3D_Manager", Path)
         UR := Username "\" Repository_Name
-        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
         gitfunc := new Github(UR)
+        Path_To_Save_DL := Path_To_Save_DL "\" gitfunc.name()
         return gitfunc.release()
     }
     GitGetUpdateDetails(Username, Repository_Name)
     {
         ;GitDownload("samfisherirl","Geo3D_Manager", Path)
         UR := Username "\" Repository_Name
-        Path_To_Save_DL := Path_To_Save_DL "\" git.name()
         gitfunc := new Github(UR)
+        Path_To_Save_DL := Path_To_Save_DL "\" gitfunc.name()
         return gitfunc.details()
     }
   class Update
