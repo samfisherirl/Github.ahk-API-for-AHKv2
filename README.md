@@ -18,6 +18,9 @@ Download latest releases from github with classes or functions, including versio
 To initiate, you can download the latest release which generates code from a GUI, or see below image.
 
 Quick function list:
+ 
+    #include json.ahk
+    #include github.ahk
     ;using this url as an example
     ;https://github.com/samfisherirl/github.ahk
  
