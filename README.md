@@ -1,4 +1,4 @@
-# Download latest releases from github with classes or functions, including self-application update. 
+# Download latest releases from github with classes or functions, including version details to perpetually ensure the application is updated. 
 
 A Modular Library to Download latest releases from github api and check version.
 
