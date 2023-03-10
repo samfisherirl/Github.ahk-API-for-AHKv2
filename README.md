@@ -70,20 +70,17 @@ How to download latest github release:
 
         git.upd(log)
  
-
-credit to https://github.com/clangremlini/OTA.ahk 
-credit to https://github.com/kurtmckee/ahk_json
  
 Gui built for generating code in object form:
 
 
 ![Z80uAcG](https://user-images.githubusercontent.com/98753696/194636178-385c2dcb-1220-474c-b3ae-a09b33c94339.png)
 
+alternately
 
         git := new Github("samfisherirl/Geo3D_Manager")
            objectname :=  new Github(username"/"repository)
 
-alternately
 
          rep := "samfisherirl/Geo3D_Manager"
          
