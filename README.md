@@ -1,12 +1,14 @@
 # Download latest releases from github with classes or functions, including self-application update. 
 
+A Modular Library to Download latest releases from github api and check version.
+
 <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="githubahk_0"></a>github.ahk</h1>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 #Include Github.ahk
 
 #Include Json.ahk https://github.com/kurtmckee/ahk_json
 
-A Modular Library to Download latest releases from github api and check version.
+ #
  
 3/10/23 update: Additional functions for easy use, added and tested. 
 
