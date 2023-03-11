@@ -71,7 +71,7 @@ How to download latest github release:
         
         git.details() ; return changes made for latest update
 
-        git.tag() ; returns only version data, ie "v1.2333", ideally for checking if update is necessary
+        git.tag() ; returns only version number, ie "v1.2333", ideally for checking if update is necessary
         
         anyname := new Github("any_username/any_repo") 
         
