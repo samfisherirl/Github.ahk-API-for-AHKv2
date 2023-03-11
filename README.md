@@ -66,6 +66,13 @@ How to download latest github release:
 
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
         
+        
+        git.release() ; Url of release 
+        
+        git.details() ; return changes made for latest update
+
+        git.tag() ; returns only version data, ie "v1.2333", ideally for checking if update is necessary
+        
         anyname := new Github("any_username/any_repo") 
         
         git := new Github("samfisherirl/github.ahk") ; example using this repository
