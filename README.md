@@ -21,7 +21,6 @@ Overall, this library is designed to help developers save time and effort by pro
 
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 
-#Include Json.ahk https://github.com/kurtmckee/ahk_json
 
  #
  
@@ -31,8 +30,7 @@ To initiate, you can download the latest release which generates code from a GUI
 
 Quick function list:
  
-; https://www.autohotkey.com/boards/viewtopic.php?f=83&t=100197
-;credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
+credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
 ```autohotkey
 #Include lib\github.ahk
