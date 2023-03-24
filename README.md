@@ -25,40 +25,59 @@ Overall, this library is designed to help developers save time and effort by pro
 
  #
  
-3/10/23 update: Additional functions for easy use, added and tested. 
+3/22/23 update: v2
 
 To initiate, you can download the latest release which generates code from a GUI, or see below image.
 
 Quick function list:
  
-    #include json.ahk
-    #include github.ahk
- 
-    Username := "samfisherirl"
-    Repo := "github.ahk"
+; https://www.autohotkey.com/boards/viewtopic.php?f=83&t=100197
+;credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
-    Version := GitGetVersion(Username,Repo)
-    Asset := GitGetAsset(Username,Repo)
-    ReleaseUrl := GitGetReleaseUrl(Username,Repo)
-    UpdateDetails := GitGetUpdateDetails(Username,Repo)
+```autohotkey
+#Include lib\github.ahk
+#Include lib\Native.ahk 
 
-    message=
-    (
-    Below are details about the requested:
-        - The current version is %version% 
-            (great for apps that need to check for updates)
-        - The release file is %asset%
-        - The download link is %releaseurl%
 
-        - The details of the update changes are:
-            %UpdateDetails%
-    )
+git := Github("samfisherirl", "Github.ahk")
+/*
+object := Gitub(Username, Repository)
+*/
 
-    msgbox, %message%
+git.download("release")
+/*
+object.download("filename for saving")
+downloads the first, latest release file 
+extension is taken care of due to variables
+*/
 
-    GitDownload("samfisherirl","github.ahk", Path)
-    msgbox, Download Finished! 
- 
+git.download(A_ScriptDir "\release")
+/*
+Full paths can also be passed
+*/
+
+msgbox(git.version())
+/*
+Latest version, great for storing and checking for updates.
+*/
+
+version := git.version()
+urlforDL :=  git.release()
+releaseNotes := git.details()
+repoName := git.repo
+
+msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes
+
+msgstring .= "`nIt can be downloaded at " urlforDL
+msgbox(msgstring)
+/*
+Latest version, great for storing and checking for updates.
+*/
+```
+
+
+
+; 
  ![image](https://user-images.githubusercontent.com/98753696/224391018-7596576e-e988-4d46-9242-33a667654ed5.png)
 
 #
