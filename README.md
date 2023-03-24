@@ -28,7 +28,7 @@ Overall, this library is designed to help developers save time and effort by pro
 
 To initiate, you can download the latest release which generates code from a GUI, or see below image.
 
-Quick function list:
+Quick function list v2:
  
 credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
@@ -83,7 +83,7 @@ Latest version, great for storing and checking for updates.
         
 
         
-How to download latest github release:
+How to download latest github release v1:
         
         
         using this url as an example: https://github.com/samfisherirl/github.ahk
