@@ -85,6 +85,7 @@ notify_update(git) {
     msgbox(msgstring)
 
 }
+;
 ```
 
 
