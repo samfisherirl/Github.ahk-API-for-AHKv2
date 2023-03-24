@@ -33,9 +33,11 @@ Quick function list v2:
 credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
 ```autohotkey
-#Include lib\github.ahk
-#Include lib\Native.ahk 
+; https://www.autohotkey.com/boards/viewtopic.php?f=83&t=100197
+;credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
+#Include lib\github.ahk
+#Include lib\Native.ahk
 
 git := Github("samfisherirl", "Github.ahk")
 /*
@@ -45,7 +47,7 @@ object := Gitub(Username, Repository)
 git.download("release")
 /*
 object.download("filename for saving")
-downloads the first, latest release file 
+downloads the first, latest release file
 extension is taken care of due to variables
 */
 
@@ -58,19 +60,31 @@ msgbox(git.version())
 /*
 Latest version, great for storing and checking for updates.
 */
+some_stored_version := "v1"
 
-version := git.version()
-urlforDL :=  git.release()
-releaseNotes := git.details()
-repoName := git.repo
 
-msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes
+if (some_stored_version != git.version()) {
+    notify_update(git)
+    git.download(A_ScriptDir "\release")
+}
 
-msgstring .= "`nIt can be downloaded at " urlforDL
-msgbox(msgstring)
 /*
 Latest version, great for storing and checking for updates.
 */
+
+notify_update(git) {
+
+    version := git.version()
+    urlforDL := git.dlurl
+    urlforDL := git.releaseUrl()
+    releaseNotes := git.details()
+    repoName := git.repo
+
+    msgstring := "Version " . version . " of " . repoName . " has an update: `n" . releaseNotes . "`n`n"
+    msgstring .= "`nIt can be downloaded at " urlforDL
+    msgbox(msgstring)
+
+}
 ```
 
 
