@@ -29,11 +29,11 @@ Latest version, great for storing and checking for updates.
 */
 
 version := git.version()
-urlforDL :=  git.release()
+urlforDL :=  git.releaseURL()
 releaseNotes := git.details()
 repoName := git.repo
 
-msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes
+msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes . "`n`n"
 
 msgstring .= "`nIt can be downloaded at " urlforDL
 msgbox(msgstring)
