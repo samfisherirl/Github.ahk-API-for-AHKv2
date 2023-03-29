@@ -5,6 +5,8 @@ A Modular Library to Download latest releases from the github API, among other g
 
 # 
 
+A more advanced version of this library, providing 7zip, zip extraction and local version storage for handling long term support here: https://github.com/samfisherirl/Auto-Update.ahk-AHK-v2-easily-update-ahk-apps-remotely
+
 This library provides a software library as a set of tools and functionalities to help developers automate and simplify the process of downloading the latest releases from GitHub, as well as other time-saving features related to GitHub usage.
 
 GitHub is a popular platform used by developers to collaborate on software projects and track their versions. The GitHub API provides a way for developers to programmatically interact with the platform, including accessing information about repositories, releases, and other data.
