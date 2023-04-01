@@ -2,8 +2,8 @@
 ;credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
 
-#Include lib\github.ahk
-#Include lib\Native.ahk 
+#Include %A_ScriptDir%\lib\github.ahk
+#Include %A_ScriptDir%\lib\JXON.ahk 
 
 
 git := Github("samfisherirl", "Github.ahk")
@@ -29,11 +29,11 @@ Latest version, great for storing and checking for updates.
 */
 
 version := git.version()
-urlforDL :=  git.releaseURL()
+urlforDL :=  git.release()
 releaseNotes := git.details()
 repoName := git.repo
 
-msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes . "`n`n"
+msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes
 
 msgstring .= "`nIt can be downloaded at " urlforDL
 msgbox(msgstring)
