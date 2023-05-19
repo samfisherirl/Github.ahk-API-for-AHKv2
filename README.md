@@ -7,12 +7,8 @@ A Modular Library to Download latest releases from the github API, among other g
 
 
  #
- 
-3/22/23 update: v2
 
-To initiate, you can download the latest release which generates code from a GUI, or see below image.
-
-Quick function list v2:
+Method List:
  
 credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
