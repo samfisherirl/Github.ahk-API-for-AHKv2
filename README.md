@@ -10,7 +10,7 @@ A Modular Library to Download latest releases from the github API, among other g
  #
 credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 
-# Ahkv2 Method list 
+# AHK v2 Method list 
 
 ```autohotkey
 ;credit to Jxon .ahk creator https://github.com/TheArkive/JXON_ahk2
