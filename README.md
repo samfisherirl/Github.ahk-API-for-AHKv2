@@ -46,7 +46,7 @@ enumerateReleases(MapParam) {
     msg := ""
     for releaseName, releaseURL in MapParam
     {
-        msg .= ("Release name and date: " releaseName "`nCan be Downloaded at: `n" releaseURL "`n`n")
+        msg .= ("Release name, date and update notes: " releaseName "`nCan be Downloaded at: `n" releaseURL "`n`n")
     }
     MsgBox(msg)
 }
@@ -63,7 +63,6 @@ msgbox(msgstring)
 /*
 Latest version, great for storing and checking for updates.
 */
-
  ```
 
 # AHK v1 Method list:
