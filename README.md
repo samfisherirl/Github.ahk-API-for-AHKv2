@@ -34,7 +34,6 @@ git.download("path.zip", URL)
 ; enumerate assets available in latest release
 enumerateReleases(git.LatestReleasesMap)
 
-
 ; enumerate ==ALL History Releases==
 enumerateReleases(git.historicReleases())
 /*
