@@ -57,7 +57,7 @@ Latest version, great for storing and checking for updates.
 
  ```
 
-# Ahkv1 Method list:
+# AHK v1 Method list:
         
 ```autohotkey
         using this url as an example: https://github.com/samfisherirl/github.ahk
