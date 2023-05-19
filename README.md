@@ -5,6 +5,7 @@ A Modular Library to Download latest releases from the github API, among other g
 
 <p class="has-line-data" data-line-start="1" data-line-end="2">
 
+ ![image](https://user-images.githubusercontent.com/98753696/224391018-7596576e-e988-4d46-9242-33a667654ed5.png)
 
  #
 credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
@@ -55,17 +56,6 @@ Latest version, great for storing and checking for updates.
 
 
  ```
-
-
-
-; 
- ![image](https://user-images.githubusercontent.com/98753696/224391018-7596576e-e988-4d46-9242-33a667654ed5.png)
-
-#
-
-        
-
-        
 
 # Ahkv1 Method list:
         
