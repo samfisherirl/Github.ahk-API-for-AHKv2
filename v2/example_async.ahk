@@ -14,28 +14,32 @@ git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 git.Download(A_ScriptDir "\release.zip")
 ;object.Download("localpath", OptionalURL := http://github.com....AssetUrl.zip)
 ;Downloads the first, latest release file
-
-git.Download("release2")
-; just a name can be passed. Releases have designated extensions (zip/exe)
+; Releases have designated extensions (zip/exe)
 ; if a mismatch is provided, the method will overwrite the users extension.
 
+git.Download("release2")
+; just a name can be passed. extension will be handled.
+; this will get saved to A_ScriptDir
+
 ; Multiple Assets use-case
+
+; enumerate ==ALL Historic Releases==
+enumerateReleases(git.historicReleases())
+
 URL := git.searchReleases("v2")
-; InStr search through each release URL and Asset name.
+; InStr search through each Release name first, then falls back on URL.
 ; First match returns the url for Download, then use that below:
 git.Download("path.zip", URL)
 
 ; enumerate assets available in latest release
 enumerateReleases(git.LatestReleaseMap)
 
-; enumerate ==ALL Historic Releases==
-enumerateReleases(git.historicReleases())
 
 enumerateReleases(MapParam) {
     msg := ""
     for releaseName, releaseURL in MapParam
     {
-        msg .= ("Release name and date: " releaseName "`nCan be Downloaded at: `n" releaseURL "`n`n")
+        msg .= ("Release name, date and update notes: " releaseName "`nCan be Downloaded at: `n" releaseURL "`n`n")
     }
     MsgBox(msg)
 }
