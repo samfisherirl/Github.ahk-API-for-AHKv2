@@ -18,7 +18,7 @@ git := Github("samfisherirl", "Github.ahk")
 ; object := Gitub(Username, Repository)
 
 git.download(A_ScriptDir "\release.zip") 
-;object.download("filename for saving", OptionalURL := http://github.com....AssetUrl.zip)
+;object.download("LocalDownloadPath", OptionalURL := http://github.com....AssetUrl.zip)
 ;downloads the first, latest release file  
 
 git.download("release")
