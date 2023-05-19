@@ -9,8 +9,7 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 # AHK v2 Method list 
 
 ```autohotkey
-;credit to Jxon .ahk creator https://github.com/TheArkive/JXON_ahk2
-;using this as an example: https://github.com/samfisherirl/github.ahk
+;using this repo as an example: https://github.com/samfisherirl/github.ahk
 
 #Include %A_ScriptDir%\lib\github.ahk
 #Include %A_ScriptDir%\lib\JXON.ahk 
@@ -25,6 +24,8 @@ git.download(A_ScriptDir "\release.zip")
 git.download("release")
 ; just a name can be passed. Releases have designated extensions (zip/exe)
 ; if a mismatch is provided, the method will overwrite the users extension. 
+
+; Multiple Assets use-case
 URL := git.searchReleases("v2")
 ; InStr search through each release URL and Asset name. 
 ; First match returns the url for download, then use that below:
@@ -51,7 +52,6 @@ msgbox(msgstring)
 /*
 Latest version, great for storing and checking for updates.
 */
-
 
  ```
 
