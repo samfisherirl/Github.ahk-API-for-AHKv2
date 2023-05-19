@@ -36,6 +36,7 @@
 ; originally posted by user coco on AutoHotkey.com
 ; https://github.com/cocobelgica/AutoHotkey-JSON
 
+
 Jxon_Load(&src, args*) {
 	key := "", is_key := false
 	stack := [ tree := [] ]

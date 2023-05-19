@@ -1,21 +1,25 @@
-; credit to https://github.com/kurtmckee/ahk_json
+;credit: https://github.com/TheArkive/JXON_ahk2
+;credit: https://github.com/thqby/ahk2_lib
 
-Github(Username, Repository_Name)
+class Github
 {
-    ;GitDownload("samfisherirl","Geo3D_Manager", Path)
-    usernamePlusRepo := Username "/" Repository_Name
-    obj := GithubHandler(usernamePlusRepo)
-    return obj
-}
-class GithubHandler
-{
-    __new(usernamePlusRepo) {
+    /**
+     * with this url as an example:
+     * https://github.com/TheArkive/JXON_ahk2
+     * @param Github_Username:="TheArkive"
+     * @param Repository_Name:="JXON_ahk2"
+     * @param Download (path_to_save, url := "optional") using DownloadAsync.ahk
+     * @param this.historicReleases() returns Map() of all releases with Key := Name+Date, Value := Release Download URL
+     * @param this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
+     * @param this.details() notes or body for the release with changes. 
+     * @param this.LatestReleaseMap for releaseName, releaseURL in this.LatestReleaseMap
+     * @param this.Version returns "v2.0.1" for example
+     */
+    __New(Username, Repository_Name) {
         temp := A_ScriptDir "\temp.json"
-        this.usernamePlusRepo := usernamePlusRepo
-        url := "https://api.github.com/repos/" usernamePlusRepo "/releases/latest"
+        this.usernamePlusRepo := Trim(Username) "/" Trim(Repository_Name)
+        url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases/latest"
         data := this.jsonDownload(url)
-
-        sleep(50)
         data := JXON_Load(&data)
         this.data := data
         this.fileType := ""
@@ -26,7 +30,7 @@ class GithubHandler
         this.ReleaseVersion := data["html_url"]
         this.Version := data["tag_name"]
         this.body := data["body"]
-        this.repo := StrSplit(usernamePlusRepo, "/")[2]
+        this.repo := StrSplit(this.usernamePlusRepo, "/")[2]
         this.LatestReleaseMap := Map()
         this.AssetList := []
         this.DownloadExtension := ""
@@ -35,11 +39,18 @@ class GithubHandler
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
     jsonDownload(URL) {
-        hObject := ComObject("WinHttp.WinHttpRequest.5.1") ;Create the Object
-        hObject.Open("GET", URL) ;Open communication
-        hObject.Send() ;Send the "get" request
-        return hObject.ResponseText ;Set the "text" variable to the response
+        Http := WinHttpRequest()
+        Http.Open("GET", URL)
+        Http.Send()
+        Http.WaitForResponse()
+        storage := Http.ResponseText
+        return storage ;Set the "text" variable to the response
 
+    }
+    Download(PathLocal, URL := this.FirstAssetDL) {
+        releaseExtension := this.downloadExtensionSplit(URL)
+        pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
+        DownloadAsync(URL, pathWithExtension)
     }
     release() {
         return this.FirstAssetDL
@@ -52,9 +63,9 @@ class GithubHandler
     }
     assetProps() {
         for k, v in this.AssetJ {
-            this.LatestReleasesMap.Set(v["name"], v["browser_download_url"])
+            this.LatestReleaseMap.Set(v["name"], v["browser_download_url"])
         }
-        return this.LatestReleasesMap
+        return this.LatestReleaseMap
     }
     historicReleases() {
         url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
@@ -62,7 +73,7 @@ class GithubHandler
         data := JXON_Load(&data)
         for i in data {
             for a in i["assets"] {
-                this.olderReleases.Set(a["name"] ": " a["created_at"], a["browser_download_url"])
+                this.olderReleases.Set(a["name"] "`n" a["created_at"] "`nUpdate notes: `n" i["body"], a["browser_download_url"])
             }
         }
         return this.olderReleases
@@ -80,7 +91,7 @@ class GithubHandler
         ; return this.j[1].assets.name
     }
     searchReleases(providedSearch) {
-        for assetName, DLURL in this.LatestReleasesMap {
+        for assetName, DLURL in this.LatestReleaseMap {
             if InStr(assetName, providedSearch) {
                 return DLURL
             }
@@ -128,12 +139,5 @@ class GithubHandler
             pathWithExtension := PathLocal "." releaseExtension
         }
         return pathWithExtension
-    }
-
-
-    download(PathLocal, URL := this.FirstAssetDL) {
-        releaseExtension := this.downloadExtensionSplit(URL)
-        pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
-        Download(URL, pathWithExtension)
     }
 }
