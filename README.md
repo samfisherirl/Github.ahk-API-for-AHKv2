@@ -14,7 +14,7 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 #Include %A_ScriptDir%\lib\github.ahk
 #Include %A_ScriptDir%\lib\JXON.ahk
 
-git := Github("samfisherirl", "Github.ahk")
+git := Github("samfisherirl", "Github.ahk-for-AHKv2")
 ; object := Gitub(Username, Repository)
 
 git.download(A_ScriptDir "\release.zip")
