@@ -21,7 +21,7 @@ URL := git.searchReleases("v2")
 git.download("path.zip", URL)
 
 ; enumerate assets available in latest release
-enumerateReleases(git.LatestReleasesMap)
+enumerateReleases(git.LatestReleaseMap)
 
 
 ; enumerate ==ALL History Releases==
