@@ -36,59 +36,56 @@ credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.ph
 
 ```autohotkey
 ; https://www.autohotkey.com/boards/viewtopic.php?f=83&t=100197
-;credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
-#Include lib\github.ahk
-#Include lib\Native.ahk
+
+
+#Include %A_ScriptDir%\lib\github.ahk
+#Include %A_ScriptDir%\lib\JXON.ahk 
+
 
 git := Github("samfisherirl", "Github.ahk")
-/*
-object := Gitub(Username, Repository)
-*/
+; object := Gitub(Username, Repository)
 
-git.download("release")
+git.download(A_ScriptDir "\release.zip")
 /*
-object.download("filename for saving")
-downloads the first, latest release file
+object.download("filename for saving", OptionalURL := http://github.com....AssetUrl.zip)
+downloads the first, latest release file 
 extension is taken care of due to variables
 */
+git.download("release")
+; just a name can be passed. Releases have designated extensions (zip/exe), if a mismatch is provided, the method will overwrite the users extension. 
 
-git.download(A_ScriptDir "\release")
-/*
-Full paths can also be passed
-*/
+URL := git.searchReleases("v2")
+; InStr search through each release URL and Asset name. First match returns the url for download, then use that below:
+git.download("path.zip", URL)
 
-msgbox(git.version())
-/*
-Latest version, great for storing and checking for updates.
-*/
-some_stored_version := "v1"
-
-
-if (some_stored_version != git.version()) {
-    notify_update(git)
-    git.download(A_ScriptDir "\release")
+For releaseName, releaseURL in git.AssetMap {
+    Msgbox("Release name: " releaseName "`nCan be downloaded at: `n" releaseURL)
 }
 
+msgbox(git.Version)
 /*
 Latest version, great for storing and checking for updates.
 */
 
-notify_update(git) {
+version := git.Version
+urlforDL :=  git.FirstAssetDL
+releaseNotes := git.details()
+repoName := git.repo
 
-    version := git.version()
-    urlforDL := git.dlurl
-    urlforDL := git.releaseUrl()
-    releaseNotes := git.details()
-    repoName := git.repo
+msgstring := "Version "  . version . " of " . repoName . " has an update: `n" . releaseNotes
 
-    msgstring := "Version " . version . " of " . repoName . " has an update: `n" . releaseNotes . "`n`n"
-    msgstring .= "`nIt can be downloaded at " urlforDL
-    msgbox(msgstring)
+msgstring .= "`nIt can be downloaded at " urlforDL
+msgbox(msgstring)
+/*
+Latest version, great for storing and checking for updates.
+*/
 
-}
+
+
+
 ;
-```
+ ```
 
 
 
