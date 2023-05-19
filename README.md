@@ -9,8 +9,7 @@ A Modular Library to Download latest releases from the github API, among other g
  #
 credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 
-Method List:
- 
+# Ahkv2 Method list 
 
 ```autohotkey
 ;credit to Jxon .ahk creator https://github.com/TheArkive/JXON_ahk2
@@ -67,7 +66,8 @@ Latest version, great for storing and checking for updates.
         
 
         
-How to download latest github release v1:
+
+# Ahkv1 Method list:
         
 ```autohotkey
         using this url as an example: https://github.com/samfisherirl/github.ahk
