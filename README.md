@@ -1,10 +1,6 @@
 <h1>Github.ahk</h1>
-
-<h3>
-A Modular Library to Download latest releases from the github API, among other github timesavers. </h3>
-
+<h3>A Modular Library to Download latest releases from the github API, among other github timesavers. </h3>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
-
  ![image](https://user-images.githubusercontent.com/98753696/224391018-7596576e-e988-4d46-9242-33a667654ed5.png)
 
  #
