@@ -23,8 +23,8 @@ git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 ; object := Gitub(Username, Repository)
 
 git.Download(A_ScriptDir "\release.zip")
-;object.Download("localpath", OptionalURL := http://github.com....AssetUrl.zip)
-;Downloads the first, latest release file
+; object.Download("localpath", OptionalURL := http://github.com....AssetUrl.zip)
+; Downloads the first, latest release file
 ; Releases have designated extensions (zip/exe)
 ; if a mismatch is provided, the method will overwrite the users extension.
 
