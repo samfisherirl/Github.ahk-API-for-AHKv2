@@ -27,7 +27,7 @@ class GithubHandler
         this.Version := data["tag_name"]
         this.body := data["body"]
         this.repo := StrSplit(usernamePlusRepo, "/")[2]
-        this.LatestReleasesMap := Map()
+        this.LatestReleaseMap := Map()
         this.AssetList := []
         this.DownloadExtension := ""
         this.olderReleases := Map()
