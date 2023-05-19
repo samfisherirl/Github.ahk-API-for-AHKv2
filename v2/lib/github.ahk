@@ -3,15 +3,15 @@
 Github(Username, Repository_Name)
 {
     ;GitDownload("samfisherirl","Geo3D_Manager", Path)
-    val := Username "/" Repository_Name
-    gg := Gitter(val)
-    return gg
+    usernamePlusRepo := Username "/" Repository_Name
+    obj := GithubHandler(usernamePlusRepo)
+    return obj
 }
-class Gitter
+class GithubHandler
 {
-    __new(val) {
+    __new(usernamePlusRepo) {
         temp := A_ScriptDir "\temp.json"
-        url := "https://api.github.com/repos/" val "/releases/latest"
+        url := "https://api.github.com/repos/" usernamePlusRepo "/releases/latest"
         data := this.jsonDownload(url)
         sleep(50)
         data := JXON_Load(&data)
@@ -23,7 +23,7 @@ class Gitter
         this.ReleaseVersion := data["html_url"]
         this.Version := this.getVersion()
         this.body := data["body"]
-        this.repo := StrSplit(val, "/")[2]
+        this.repo := StrSplit(usernamePlusRepo, "/")[2]
         this.AssetMap := Map()
         this.AssetList := []
         this.DownloadExtension := ""
