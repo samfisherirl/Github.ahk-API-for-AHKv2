@@ -11,22 +11,26 @@ class GithubHandler
 {
     __new(usernamePlusRepo) {
         temp := A_ScriptDir "\temp.json"
+        this.usernamePlusRepo := usernamePlusRepo
         url := "https://api.github.com/repos/" usernamePlusRepo "/releases/latest"
         data := this.jsonDownload(url)
+
         sleep(50)
         data := JXON_Load(&data)
+        this.data := data
         this.fileType := ""
         ;filedelete, "1.json"
         this.FirstAssetDL := data["assets"][1]["browser_download_url"]
         this.AssetJ := data["assets"]
         this.FirstAsset := data["assets"][1]["name"]
         this.ReleaseVersion := data["html_url"]
-        this.Version := this.getVersion()
+        this.Version := data["tag_name"]
         this.body := data["body"]
         this.repo := StrSplit(usernamePlusRepo, "/")[2]
-        this.AssetMap := Map()
+        this.LatestReleasesMap := Map()
         this.AssetList := []
         this.DownloadExtension := ""
+        this.olderReleases := Map()
         this.assetProps()
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
@@ -48,9 +52,20 @@ class GithubHandler
     }
     assetProps() {
         for k, v in this.AssetJ {
-            this.AssetMap.Set(v["name"], v["browser_download_url"])
+            this.LatestReleasesMap.Set(v["name"], v["browser_download_url"])
         }
-        return this.AssetMap
+        return this.LatestReleasesMap
+    }
+    historicReleases() {
+        url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
+        data := this.jsonDownload(url)
+        data := JXON_Load(&data)
+        for i in data {
+            for a in i["assets"] {
+                this.olderReleases.Set(a["name"] ": " a["created_at"], a["browser_download_url"])
+            }
+        }
+        return this.olderReleases
     }
     downloadExtensionSplit(DL) {
         Arrays := StrSplit(DL, ".")
@@ -65,7 +80,7 @@ class GithubHandler
         ; return this.j[1].assets.name
     }
     searchReleases(providedSearch) {
-        for assetName, DLURL in this.AssetMap {
+        for assetName, DLURL in this.LatestReleasesMap {
             if InStr(assetName, providedSearch) {
                 return DLURL
             }
