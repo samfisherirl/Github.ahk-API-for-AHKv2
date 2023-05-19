@@ -36,9 +36,6 @@ enumerateReleases(git.LatestReleasesMap)
 
 ; enumerate ==ALL History Releases==
 enumerateReleases(git.historicReleases())
-/*
-Latest version, great for storing and checking for updates.
-*/
 
 enumerateReleases(MapParam) {
     msg := ""
