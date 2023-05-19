@@ -57,25 +57,14 @@ Latest version, great for storing and checking for updates.
         
 ```autohotkey
         using this url as an example: https://github.com/samfisherirl/github.ahk
- 
         object: 
-        
         git := new Github("username/repository") ;instantiate the object
-
-
         git.DL("geo") ; downloads the latest release, saving to "geo.zip" relative path, you can use any name. 
-        
-        
         git.release() ; Url of release 
-        
         git.details() ; return changes made for latest update
-
         git.tag() ; returns only version number, ie "v1.2333", ideally for checking if update is necessary
-        
         anyname := new Github("any_username/any_repo") 
-        
         git := new Github("samfisherirl/github.ahk") ; example using this repository
-
 #
 ```
  
