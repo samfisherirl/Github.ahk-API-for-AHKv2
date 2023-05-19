@@ -7,7 +7,7 @@ A Modular Library to Download latest releases from the github API, among other g
 
 
  #
-credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
+credit to JXON v2 creator [ https://www.autohotkey.com/boards/viewtopic.php?t=100602](https://github.com/TheArkive/JXON_ahk2)
 
 Method List:
  
