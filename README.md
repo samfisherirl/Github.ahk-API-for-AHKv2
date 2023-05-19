@@ -60,13 +60,6 @@ urlforDL := git.FirstAssetDL
 releaseNotes := git.details()
 repoName := git.repo
 
-msgstring := "Version " . version . " of " . repoName . " has an update: `n" . releaseNotes
-
-msgstring .= "`nIt can be Downloaded at " urlforDL
-msgbox(msgstring)
-/*
-Latest version, great for storing and checking for updates.
-*/
  ```
 
 # AHK v1 Method list:
