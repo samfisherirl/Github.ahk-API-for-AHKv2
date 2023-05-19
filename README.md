@@ -15,8 +15,6 @@ credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.ph
 ```autohotkey
 ; https://www.autohotkey.com/boards/viewtopic.php?f=83&t=100197
 
-
-
 #Include %A_ScriptDir%\lib\github.ahk
 #Include %A_ScriptDir%\lib\JXON.ahk 
 
