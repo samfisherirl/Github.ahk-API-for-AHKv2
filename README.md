@@ -75,7 +75,7 @@ Latest version, great for storing and checking for updates.
         
 How to download latest github release v1:
         
-        
+```autohotkey
         using this url as an example: https://github.com/samfisherirl/github.ahk
  
         object: 
@@ -97,7 +97,7 @@ How to download latest github release v1:
         git := new Github("samfisherirl/github.ahk") ; example using this repository
 
 #
- 
+```
  
  
 Gui built for generating code in object form:
