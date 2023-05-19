@@ -23,9 +23,11 @@ git.download(A_ScriptDir "\release.zip")
 ;downloads the first, latest release file  
 
 git.download("release")
-; just a name can be passed. Releases have designated extensions (zip/exe), if a mismatch is provided, the method will overwrite the users extension. 
+; just a name can be passed. Releases have designated extensions (zip/exe)
+; if a mismatch is provided, the method will overwrite the users extension. 
 URL := git.searchReleases("v2")
-; InStr search through each release URL and Asset name. First match returns the url for download, then use that below:
+; InStr search through each release URL and Asset name. 
+; First match returns the url for download, then use that below:
 git.download("path.zip", URL)
 
 For releaseName, releaseURL in git.AssetMap {
