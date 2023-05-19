@@ -1,4 +1,4 @@
-﻿;using this repo as an example: https://github.com/samfisherirl/github.ahk
+﻿;using this repo as an example: https://github.com/samfisherirl/Github.ahk-for-AHKv2
 
 #Include %A_ScriptDir%\lib\github.ahk
 #Include %A_ScriptDir%\lib\JXON.ahk
