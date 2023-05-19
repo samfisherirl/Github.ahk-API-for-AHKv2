@@ -7,10 +7,10 @@ A Modular Library to Download latest releases from the github API, among other g
 
 
  #
+credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
 Method List:
  
-credit to Json Native.ahk creator https://www.autohotkey.com/boards/viewtopic.php?t=100602
 
 ```autohotkey
 ; https://www.autohotkey.com/boards/viewtopic.php?f=83&t=100197
