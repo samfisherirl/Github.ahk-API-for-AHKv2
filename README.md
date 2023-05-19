@@ -9,8 +9,7 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 # AHK v2 Method list 
 
 ```autohotkey
-;using this repo as an example: https://github.com/samfisherirl/github.ahk
-
+;using this repo as an example: https://github.com/samfisherirl/Github.ahk-for-AHKv2
 #Include %A_ScriptDir%\lib\github.ahk
 #Include %A_ScriptDir%\lib\JXON.ahk
 
@@ -18,7 +17,7 @@ git := Github("samfisherirl", "Github.ahk-for-AHKv2")
 ; object := Gitub(Username, Repository)
 
 git.download(A_ScriptDir "\release.zip")
-;object.download("filename for saving", OptionalURL := http://github.com....AssetUrl.zip)
+;object.download("localpath", OptionalURL := http://github.com....AssetUrl.zip)
 ;downloads the first, latest release file
 
 git.download("release")
@@ -32,10 +31,14 @@ URL := git.searchReleases("v2")
 git.download("path.zip", URL)
 
 ; enumerate assets available in latest release
-enumerateReleases(git.LatestReleasesMap)
+enumerateReleases(git.LatestReleaseMap)
 
-; enumerate ==ALL History Releases==
+
+; enumerate ==ALL Historic Releases==
 enumerateReleases(git.historicReleases())
+/*
+Latest version, great for storing and checking for updates.
+*/
 
 enumerateReleases(MapParam) {
     msg := ""
