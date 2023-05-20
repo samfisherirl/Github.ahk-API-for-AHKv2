@@ -21,18 +21,15 @@ git.Download("release2")
 ; this will get saved to A_ScriptDir
 
 ; Multiple Assets use-case
-
 ; enumerate ==ALL Historic Releases==
-git.getReleases()
+
 repo_string := ""
-for repo in git.repo_storage {
-    /*
-        downloadURL: "",
+for repo in git.getReleases() {
+    /*  downloadURL: "",
         version: "",
         body: "",
         date: "",
-        name: ""
-    */
+        name: ""  */
     repo_string .= repo.name " version " repo.version " was released on " repo.date "`nUpdate notes: `n" 
     repo_string .= repo.change_notes "`nDownload Link: " repo.downloadURL "`n`n"
 }
