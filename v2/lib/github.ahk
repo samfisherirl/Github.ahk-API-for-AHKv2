@@ -9,12 +9,16 @@ class Github
      * @param Github_Username:="TheArkive"
      * @param Repository_Name:="JXON_ahk2"
      * @param Download (path_to_save, url := "optional") using DownloadAsync.ahk
-     * @param this.historicReleases() returns Map() of all releases with Key := Name+Date, Value := Release Download URL
+     * @param this.getReleases() returns Map() of all releases with Key := Name+Date, Value := Release Download URL
      * @param this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
      * @param this.details() notes or body for the release with changes. 
      * @param this.LatestReleaseMap for releaseName, releaseURL in this.LatestReleaseMap
      * @param this.Version returns "v2.0.1" for example
      */
+
+
+    repo_storage := []
+
     __New(Username, Repository_Name) {
         temp := A_ScriptDir "\temp.json"
         this.usernamePlusRepo := Trim(Username) "/" Trim(Repository_Name)
@@ -30,7 +34,7 @@ class Github
         this.ReleaseVersion := data["html_url"]
         this.Version := data["tag_name"]
         this.body := data["body"]
-        this.repo := StrSplit(this.usernamePlusRepo, "/")[2]
+        this.repo_string := StrSplit(this.usernamePlusRepo, "/")[2]
         this.LatestReleaseMap := Map()
         this.AssetList := []
         this.DownloadExtension := ""
@@ -45,7 +49,6 @@ class Github
         Http.WaitForResponse()
         storage := Http.ResponseText
         return storage ;Set the "text" variable to the response
-
     }
     Download(PathLocal, URL := this.FirstAssetDL) {
         releaseExtension := this.downloadExtensionSplit(URL)
@@ -67,16 +70,32 @@ class Github
         }
         return this.LatestReleaseMap
     }
-    historicReleases() {
+    emptyRepoMap() {
+        repo := {
+            downloadURL: "",
+            version: "",
+            change_notes: "",
+            date: "",
+            name: ""
+        }
+        return repo
+    }
+    getReleases() {
         url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
         data := this.jsonDownload(url)
         data := JXON_Load(&data)
-        for i in data {
-            for a in i["assets"] {
-                this.olderReleases.Set(a["name"] "`n" a["created_at"] "`nUpdate notes: `n" i["body"], a["browser_download_url"])
+        for igloo in data {
+            for alpha in igloo["assets"] {
+                repo := this.emptyRepoMap()
+                repo.version := igloo["tag_name"]
+                repo.change_notes := igloo["body"]
+                repo.name := alpha["name"]
+                repo.date := alpha["created_at"]
+                repo.downloadURL := alpha["browser_download_url"]
+                this.repo_storage.Push(repo)
             }
         }
-        return this.olderReleases
+        return this.repo_storage
     }
     downloadExtensionSplit(DL) {
         Arrays := StrSplit(DL, ".")

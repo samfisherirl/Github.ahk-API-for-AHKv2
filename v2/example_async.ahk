@@ -24,30 +24,31 @@ git.Download("release2")
 ; Multiple Assets use-case
 
 ; enumerate ==ALL Historic Releases==
-enumerateReleases(git.historicReleases())
+git.getReleases()
+
+repo_string := ""
+for repo in git.repo_storage {
+    /*
+        downloadURL: "",
+        version: "",
+        body: "",
+        date: "",
+        name: ""
+    */
+    repo_string .= repo.name " version " repo.version " was released on " repo.date "`nUpdate notes: `n" 
+    repo_string .= repo.change_notes "`nDownload Link: " repo.downloadURL "`n`n"
+}
+MsgBox(repo_string)
 
 URL := git.searchReleases("v2")
 ; InStr search through each Release name first, then falls back on URL.
 ; First match returns the url for Download, then use that below:
 git.Download("path.zip", URL)
 
-; enumerate assets available in latest release
-enumerateReleases(git.LatestReleaseMap)
-
-
-enumerateReleases(MapParam) {
-    msg := ""
-    for releaseName, releaseURL in MapParam
-    {
-        msg .= ("Release name, date and update notes: " releaseName "`nCan be Downloaded at: `n" releaseURL "`n`n")
-    }
-    MsgBox(msg)
-}
-
 version := git.Version
 urlforDL := git.FirstAssetDL
 releaseNotes := git.details()
-repoName := git.repo
+repoName := git.repo_string
 
 msgstring := "Version " . version . " of " . repoName . " has an update: `n" . releaseNotes
 
