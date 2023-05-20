@@ -3,26 +3,25 @@
 
 class Github
 {
+    repo_storage := []
     /**
      * with this url as an example:
      * https://github.com/TheArkive/JXON_ahk2
      * @param Github_Username:="TheArkive"
      * @param Repository_Name:="JXON_ahk2"
      * @param Download (path_to_save, url := "optional") using DownloadAsync.ahk
-     * @param this.getReleases() returns Map() of all releases with Key := Name+Date, Value := Release Download URL
+     * @param this.getReleases() returns Map() of all releases, accessed @ this.repo_storage
+     * @param this.repo_storage for i in repo_storage returns => i.downloadURL: "", i.version: "", i.change_notes: "", i.date: "",  i.name: ""
      * @param this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
      * @param this.details() notes or body for the release with changes. 
      * @param this.LatestReleaseMap for releaseName, releaseURL in this.LatestReleaseMap
      * @param this.Version returns "v2.0.1" for example
      */
-
-
-    repo_storage := []
-
     __New(Username, Repository_Name) {
         temp := A_ScriptDir "\temp.json"
         this.usernamePlusRepo := Trim(Username) "/" Trim(Repository_Name)
         url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases/latest"
+        this.source_zip := "https://github.com/" this.usernamePlusRepo "/archive/refs/heads/main.zip"
         data := this.jsonDownload(url)
         data := JXON_Load(&data)
         this.data := data
@@ -49,6 +48,9 @@ class Github
         Http.WaitForResponse()
         storage := Http.ResponseText
         return storage ;Set the "text" variable to the response
+    }
+    Source(Pathlocal){
+        this.Download(PathLocal, URL := this.source_zip)
     }
     Download(PathLocal, URL := this.FirstAssetDL) {
         releaseExtension := this.downloadExtensionSplit(URL)

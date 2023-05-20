@@ -20,9 +20,11 @@ git.Download("release2")
 ; just a name can be passed. extension will be handled.
 ; this will get saved to A_ScriptDir
 
+git.Source(A_ScriptDir "\main.zip")
+; download main branch source code
+
 ; Multiple Assets use-case
 ; enumerate ==ALL Historic Releases==
-
 repo_string := ""
 for repo in git.getReleases() {
     /*  downloadURL: "",
