@@ -10,7 +10,6 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 
 ```autohotkey
 ;using this repo as an example: https://github.com/samfisherirl/Github.ahk-for-AHKv2
-;Async can provide more stable Download success. 
 ;credit: https://github.com/TheArkive/JXON_ahk2
 ;credit: https://github.com/thqby/ahk2_lib
 
