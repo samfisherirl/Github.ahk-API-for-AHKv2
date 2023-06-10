@@ -55,7 +55,7 @@ class Github
     Download(PathLocal, URL := this.FirstAssetDL) {
         releaseExtension := this.downloadExtensionSplit(URL)
         pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
-        DownloadAsync(URL, pathWithExtension)
+        Download(URL, pathWithExtension)
     }
     release() {
         return this.FirstAssetDL

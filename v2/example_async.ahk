@@ -4,7 +4,6 @@
 
 #Include %A_ScriptDir%\lib\github.ahk
 #Include %A_ScriptDir%\lib\WinHttpRequest.ahk
-#Include %A_ScriptDir%\lib\DownloadAsync.ahk
 #Include %A_ScriptDir%\lib\JXON.ahk
 
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
