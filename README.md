@@ -37,7 +37,8 @@ for fileName, downloadLink in m
 ```autohotkey
 ; enumerate ==ALL Historic Releases==
 repo_string := ""
-for repo in git.historicReleases() {
+for repo in git.historicReleases() 
+{
     /*  downloadURL: "",
         version: "",
         body: "",
