@@ -3,19 +3,29 @@
 ;credit: https://github.com/thqby/ahk2_lib
 
 #Include %A_ScriptDir%\lib\github.ahk
-#Include %A_ScriptDir%\lib\WinHttpRequest.ahk
-#Include %A_ScriptDir%\lib\JXON.ahk
 
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 ; object := Gitub(Username, Repository)
 
-git.Download(A_ScriptDir "\release.zip")
+ar := git.releaseURLArray()
+for downloadLink in ar
+{
+    MsgBox(downloadLink)
+}
+m := git.releaseURLMap()
+for fileName, downloadLink in m
+{
+    if InStr(fileName, "v2") {
+        MsgBox(fileName "`n" downloadLink)
+        Download(downloadLink, A_ScriptDir)
+        break
+    }
+}
 ;object.Download("localpath", OptionalURL := http://github.com....AssetUrl.zip)
 ;Downloads the first, latest release file
 ; Releases have designated extensions (zip/exe)
 ; if a mismatch is provided, the method will overwrite the users extension.
 
-git.Download("release2")
 ; just a name can be passed. extension will be handled.
 ; this will get saved to A_ScriptDir
 
@@ -25,7 +35,7 @@ git.Source(A_ScriptDir "\main.zip")
 ; Multiple Assets use-case
 ; enumerate ==ALL Historic Releases==
 repo_string := ""
-for repo in git.getReleases() {
+for repo in git.historicReleases() {
     /*  downloadURL: "",
         version: "",
         body: "",
@@ -41,15 +51,6 @@ URL := git.searchReleases("v2")
 ; First match returns the url for Download, then use that below:
 git.Download("path.zip", URL)
 
-version := git.Version
-urlforDL := git.FirstAssetDL
-releaseNotes := git.details()
-repoName := git.repo_string
-
-msgstring := "Version " . version . " of " . repoName . " has an update: `n" . releaseNotes
-
-msgstring .= "`nIt can be Downloaded at " urlforDL
-msgbox(msgstring)
 /*
 Latest version, great for storing and checking for updates.
 */
