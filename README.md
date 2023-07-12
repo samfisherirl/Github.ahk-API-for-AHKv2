@@ -39,11 +39,11 @@ for fileName, downloadLink in m
 repo_string := ""
 for repo in git.historicReleases() 
 {
-    /*  downloadURL: "",
-        version: "",
-        body: "",
-        date: "",
-        name: ""  */
+        ; downloadURL: "",
+        ; version: "",
+        ; body: "",
+        ; date: "",
+        ; name: ""  
     repo_string .= repo.name " version " repo.version " was released on " repo.date "`nUpdate notes: `n" 
     repo_string .= repo.change_notes "`nDownload Link: " repo.downloadURL "`n`n"
 }
