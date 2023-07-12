@@ -8,7 +8,7 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 
 # AHK v2 Method list 
 
-`array of latest URLs`
+`array of latest release, and all files' URLs`
 ```autohotkey
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 ; object := Gitub(Username, Repository)
@@ -47,6 +47,12 @@ for repo in git.historicReleases() {
     repo_string .= repo.change_notes "`nDownload Link: " repo.downloadURL "`n`n"
 }
 MsgBox(repo_string)
+```
+
+`current source zip`
+```autohotkey
+git.Source(A_ScriptDir "\main.zip")
+
 ```
 
 # AHK v1 Method list:
