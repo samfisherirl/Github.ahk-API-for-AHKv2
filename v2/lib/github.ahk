@@ -9,13 +9,13 @@ class Github extends Jsons
      * https://github.com/TheArkive/JXON_ahk2
      * @param Github_Username:="TheArkive"
      * @param Repository_Name:="JXON_ahk2"
-     * @param Download (path_to_save, url := "optional") using DownloadAsync.ahk
-     * @param this.historicReleases() returns Map() of all releases, accessed @ this.repo_storage
-     * @param this.repo_storage for i in repo_storage returns => i.downloadURL: "", i.version: "", i.change_notes: "", i.date: "",  i.name: ""methoi
-     * @param this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
-     * @param this.details() notes or body for the release with changes. 
-     * @param this.LatestReleaseMap for releaseName, releaseURL in this.LatestReleaseMap
-     * @param this.Version returns "v2.0.1" for example
+     * @func Download (path_to_save, url := "optional") using DownloadAsync.ahk
+     * @func this.historicReleases() returns Map() of all releases, accessed @ this.repo_storage
+     * @func this.repo_storage for i in repo_storage returns => i.downloadURL: "", i.version: "", i.change_notes: "", i.date: "",  i.name: ""methoi
+     * @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
+     * @func this.details() notes or body for the release with changes. 
+     * @func this.LatestReleaseMap for releaseName, releaseURL in this.LatestReleaseMap
+     * @func this.Version returns "v2.0.1" for example
      */
     __New(Username, Repository_Name) {
         temp := A_ScriptDir "\temp.json"
@@ -27,7 +27,7 @@ class Github extends Jsons
         this.data := data
         this.fileType := ""
         ;filedelete, "1.json"
-        this.downloadCount := data["assets"].Length
+        this.releaseURLCount := data["assets"].Length
         this.AssetJ := data["assets"]
         this.FirstAsset := data["assets"][1]["name"]
         this.ReleaseVersion := data["html_url"]
@@ -41,11 +41,23 @@ class Github extends Jsons
         this.assetProps()
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
-    releaseURLArray(){
-        return Github.distributeReleaseArray(this.downloadCount, this.data["assets"])
+    /*
+    loop releaseURLCount {
+        assetArray.Push(Jdata[A_Index]["browser_download_url"])
     }
+    return => assetArray[]
+    */
+    releaseURLArray(){
+        return Github.distributeReleaseArray(this.releaseURLCount, this.data["assets"])
+    }
+    /*
+    loop releaseURLCount {
+        assetMap.Set(Jdata[A_Index]["name"], Jdata[A_Index]["browser_download_url"])
+    }
+    return => assetMap()
+    */
     releaseURLMap(){
-        return Github.distributeReleaseMap(this.downloadCount, this.data["assets"])
+        return Github.distributeReleaseMap(this.releaseURLCount, this.data["assets"])
     }
     jsonDownload(URL) {
         Http := WinHttpRequest()
@@ -55,10 +67,10 @@ class Github extends Jsons
         storage := Http.ResponseText
         return storage ;Set the "text" variable to the response
     }
-    static distributeReleaseMap(downloadCount, Jdata){
+    static distributeReleaseMap(releaseURLCount, Jdata){
         assetMap := Map()
-        if (downloadCount > 1) {
-            loop downloadCount {
+        if (releaseURLCount > 1) {
+            loop releaseURLCount {
                 assetMap.Set(Jdata[A_Index]["name"], Jdata[A_Index]["browser_download_url"])
             }
         }
@@ -67,10 +79,10 @@ class Github extends Jsons
         }
         return assetMap
     }
-    static distributeReleaseArray(downloadCount, Jdata){
+    static distributeReleaseArray(releaseURLCount, Jdata){
         assetArray := []
-        if (downloadCount > 1) {
-            loop downloadCount {
+        if (releaseURLCount > 1) {
+            loop releaseURLCount {
                 assetArray.Push(Jdata[A_Index]["browser_download_url"])
             }
         }
