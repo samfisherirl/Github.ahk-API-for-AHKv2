@@ -14,6 +14,7 @@ git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 ; object := Gitub(Username, Repository)
 
 ar := git.releaseURLArray()
+; array of latest release, all url direct download links (IE zip, 7zip, rar, exe)
 for downloadLink in ar
 {
     MsgBox(downloadLink)
@@ -23,9 +24,10 @@ for downloadLink in ar
 
 ```autohotkey
 m := git.releaseURLMap()
+; map of latest release. key:filename, value:url direct download link (IE zip, 7zip, rar, exe)
 for fileName, downloadLink in m
 {
-    if InStr(fileName, "v2") {
+    if InStr(fileName, ".zip") {
         MsgBox(fileName "`n" downloadLink)
         Download(downloadLink, A_ScriptDir)
         break
