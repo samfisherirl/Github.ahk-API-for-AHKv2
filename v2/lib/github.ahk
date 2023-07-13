@@ -30,6 +30,7 @@ class Github extends Jsons
         this.releaseURLCount := data["assets"].Length
         this.AssetJ := data["assets"]
         this.FirstAsset := data["assets"][1]["name"]
+        this.FirstAssetDL := data["assets"][1]["browser_download_url"]
         this.ReleaseVersion := data["html_url"]
         this.Version := data["tag_name"]
         this.body := data["body"]
@@ -92,9 +93,9 @@ class Github extends Jsons
         return assetArray
     }
     Source(Pathlocal){
-        this.Download(PathLocal, URL := this.source_zip)
+        this.Download(URL := this.source_zip, PathLocal)
     }
-    Download(PathLocal, URL := this.FirstAssetDL) {
+    Download(URL := this.FirstAssetDL, PathLocal := A_ScriptDir) {
         releaseExtension := this.downloadExtensionSplit(URL)
         pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
         Download(URL, pathWithExtension)

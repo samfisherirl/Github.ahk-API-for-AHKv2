@@ -11,15 +11,20 @@ ar := git.releaseURLArray()
 ; array of latest release, all url direct download links (IE zip, 7zip, rar, exe)
 for downloadLink in ar
 {
-    MsgBox(downloadLink)
+    if InStr(downloadLink, ".7z") {
+        MsgBox(downloadLink)
+        git.Download(downloadLink, A_ScriptDir)
+        ; download helper ensures user applies proper extension
+        break
+    }
 }
 m := git.releaseURLMap()
 ; map of latest release. key:filename, value:url direct download link (IE zip, 7zip, rar, exe)
 for fileName, downloadLink in m
 {
-    if InStr(fileName, ".zip") {
+    if InStr(fileName, ".7z") {
         MsgBox(fileName "`n" downloadLink)
-        Download(downloadLink, A_ScriptDir)
+        git.Download(downloadLink, A_ScriptDir)
         break
     }
 }
