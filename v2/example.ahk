@@ -6,7 +6,8 @@
 
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 ; object := Gitub(Username, Repository)
-
+git.Download(git.releaseURLArray()[1], A_ScriptDir) 
+; download latest release, fastest option if the release is in only one format (exe, zip)   
 ar := git.releaseURLArray()
 ; array of latest release, all url direct download links (IE zip, 7zip, rar, exe)
 for downloadLink in ar

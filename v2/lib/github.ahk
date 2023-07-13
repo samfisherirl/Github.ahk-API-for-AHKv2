@@ -95,6 +95,12 @@ class Github extends Jsons
     Source(Pathlocal){
         this.Download(URL := this.source_zip, PathLocal)
     }
+    /*
+    Download (
+        @param URL to download
+        @param Path where to save locally
+    )
+    */
     Download(URL := this.FirstAssetDL, PathLocal := A_ScriptDir) {
         releaseExtension := this.downloadExtensionSplit(URL)
         pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
@@ -129,18 +135,21 @@ class Github extends Jsons
         url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
         data := this.jsonDownload(url)
         data := Jsons.Loads(&data)
-        for igloo in data {
-            for alpha in igloo["assets"] {
-                repo := this.emptyRepoMap()
-                repo.version := igloo["tag_name"]
-                repo.change_notes := igloo["body"]
-                repo.name := alpha["name"]
-                repo.date := alpha["created_at"]
-                repo.downloadURL := alpha["browser_download_url"]
-                this.repo_storage.Push(repo)
+        for release in data {
+            for asset in release["assets"] {
+                this.repo_storage.Push(this.repoDistribution(release, asset))
             }
         }
         return this.repo_storage
+    }
+    repoDistribution(release, asset) {
+        repo := this.emptyRepoMap()
+        repo.version := release["tag_name"]
+        repo.change_notes := release["body"]
+        repo.name := asset["name"]
+        repo.date := asset["created_at"]
+        repo.downloadURL := asset["browser_download_url"]
+        return repo
     }
     downloadExtensionSplit(DL) {
         Arrays := StrSplit(DL, ".")
