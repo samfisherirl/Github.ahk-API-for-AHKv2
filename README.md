@@ -11,8 +11,18 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 ```autohotkey
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 
+git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
+
 latest := git.latest()
-; Download(latest.downloadURLs[1], A_ScriptDir) first download (good enough for single file releases)
+
+userResponse := MsgBox(git.Repository_Name "'s latest update is dated:`n"
+                        latest.date "`nVersion: " latest.version 
+                        "`nWould you like to download?",, '36')
+if (userResponse = "Yes"){
+	Download(latest.downloadURLs[1], A_ScriptDir)
+}
+
+
 /*
     git.latest() returns {
         downloadURLs: [],
