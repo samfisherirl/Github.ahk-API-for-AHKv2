@@ -28,7 +28,7 @@ if (userResponse = "Yes"){
     git.latest() returns {
         downloadURLs: [],
         version: "",
-        body: "",
+        change_notes: "",
         date: ""
     }  
 */
