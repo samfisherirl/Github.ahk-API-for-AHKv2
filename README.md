@@ -15,9 +15,10 @@ git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 
 latest := git.latest()
 
-userResponse := MsgBox(git.Repository_Name "'s latest update is dated:`n"
-                        latest.date "`nVersion: " latest.version 
-                        "`nWould you like to download?",, '36')
+userResponse := MsgBox(
+    git.Repository_Name "'s latest update is dated:`n"
+    latest.date "`nVersion: " latest.version 
+    "`nWould you like to download?",, '36')
 if (userResponse = "Yes"){
 	Download(latest.downloadURLs[1], A_ScriptDir)
 }
