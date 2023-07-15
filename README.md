@@ -7,37 +7,28 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 ![image](https://github.com/samfisherirl/github.ahk/assets/98753696/536823be-20e6-43f2-a612-c780953e2bdf)
 
 # AHK v2 Method list 
-
-`array of latest release, and all files' URLs`
+ 
 ```autohotkey
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
+
+latest := git.latest()
+; Download(latest.downloadURLs[1], A_ScriptDir) first download (good enough for single file releases)
+/*
+    git.latest() returns {
+        downloadURLs: [],
+        version: "",
+        body: "",
+        date: ""
+    }  
+*/
+for url in latest.downloadURLs {
+    if InStr(url, ".zip") {
+        git.download(url, A_ScriptDir) 
+        break
+    }
+}
 ; object := Gitub(Username, Repository)
 
-ar := git.releaseURLArray()
-; array of latest release, all url direct download links (IE zip, 7zip, rar, exe)
-for downloadLink in ar
-{
-    if InStr(downloadLink, ".7z") {
-        MsgBox(downloadLink)
-        git.Download(downloadLink, A_ScriptDir)
-        ; download helper ensures user applies proper extension
-        break
-    }
-}
-```
-`Map of latest release URLs`
-
-```autohotkey
-m := git.releaseURLMap()
-; map of latest release. key:filename, value:url direct download link (IE zip, 7zip, rar, exe)
-for fileName, downloadLink in m
-{
-    if InStr(fileName, ".7z") {
-        MsgBox(fileName "`n" downloadLink)
-        git.Download(downloadLink, A_ScriptDir)
-        break
-    }
-}
 ```
 
 `enumerate historic releases`
