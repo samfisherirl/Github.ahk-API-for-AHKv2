@@ -1,7 +1,8 @@
 ;credit: https://github.com/TheArkive/JXON_ahk2
 ;credit: https://github.com/thqby/ahk2_lib
 
-class Github 
+
+class Github
 {
     static repo_storage := []
 
@@ -9,7 +10,7 @@ class Github
         repo: "",
         source_zip: ""
     }
-    static data := ""
+    static data := false
     /**
      * with this url as an example:
      * https://github.com/TheArkive/JXON_ahk2
@@ -26,6 +27,8 @@ class Github
     __New(Username, Repository_Name) {
         this.Username := Username
         this.Repository_Name := Repository_Name
+        this.usernamePlusRepo := Trim(Username) "/" Trim(Repository_Name)
+        this.url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
         this.fileType := ""
         ;filedelete, "1.json"
         this.LatestReleaseMap := Map()
@@ -37,7 +40,7 @@ class Github
     /*
         return {
             downloadURLs: [
-                            http://github.com/release.zip, 
+                            http://github.com/release.zip,
                             http://github.com/release.rar
                         ],
             version: "",
@@ -45,7 +48,7 @@ class Github
             date: "",
         }
     */
-    latest(){
+    latest() {
         /*
         static latest := {
             downloadURL: "",
@@ -54,7 +57,7 @@ class Github
             date: "",
             name: ""
         }
-
+        
         this.releaseURLCount := data["assets"].Length
         this.AssetJ := data["assets"]
         this.FirstAsset := data["assets"][1]["name"]
@@ -63,24 +66,30 @@ class Github
         this.Version := data["tag_name"]
         this.body := data["body"]
         */
-
-        data := Github.processRepo(this.Username, this.Repository_Name)
+        data := Github.data ? Github.data : Github.processRepo(this.url)
         return Github.latestProp(data)
     }
-    static processRepo(Username, Repository_Name){
-        Github.storage.repo := Trim(Username) "/" Trim(Repository_Name)
-        url := "https://api.github.com/repos/" Github.storage.repo "/releases/latest"
+    static processRepo(url) {
         Github.storage.source_zip := "https://github.com/" Github.storage.repo "/archive/refs/heads/main.zip"
-        data := Github.jsonDownload(url)
+        Github.data := Github.jsonDownload(url)
+        data := Github.data
         return Jsons.Loads(&data)
     }
-    static latestProp(data){
-        releaseArray := Github.distributeReleaseArray(data["assets"].Length, data["assets"])
+    static latestProp(data) {
+        for i in data {
+            if i["assets"].Length > 0 {
+                length := i["assets"].Length
+                assetMap := i["assets"]
+                baseData := i
+                break
+            }
+        }
+        releaseArray := Github.distributeReleaseArray(length, assetMap)
         return {
             downloadURLs: releaseArray,
-            version: data["tag_name"],
-            change_notes: data["body"],
-            date: data["assets"][1]["created_at"],
+            version: baseData["tag_name"],
+            change_notes: baseData["body"],
+            date: assetMap[1]["created_at"],
         }
     }
     /*
@@ -89,7 +98,7 @@ class Github
     }
     return => assetArray[]
     */
-    releaseURLArray(){
+    releaseURLArray() {
         return Github.distributeReleaseArray(this.releaseURLCount, Github.data["assets"])
     }
     /*
@@ -106,19 +115,21 @@ class Github
         storage := Http.ResponseText
         return storage ;Set the "text" variable to the response
     }
-    static distributeReleaseArray(releaseURLCount, Jdata){
+    static distributeReleaseArray(releaseURLCount, Jdata) {
         assetArray := []
-        if (releaseURLCount > 1) {
-            loop releaseURLCount {
-                assetArray.Push(Jdata[A_Index]["browser_download_url"])
+        if releaseURLCount {
+            if (releaseURLCount > 1) {
+                loop releaseURLCount {
+                    assetArray.Push(Jdata[A_Index]["browser_download_url"])
+                }
             }
+            else {
+                assetArray.Push(Jdata[1]["browser_download_url"])
+            }
+            return assetArray
         }
-        else {
-            assetArray.Push(Jdata[1]["browser_download_url"])
-        }
-        return assetArray
     }
-    Source(Pathlocal){
+    Source(Pathlocal) {
         this.Download(URL := Github.storage.source_zip, PathLocal)
     }
     /*
@@ -133,7 +144,7 @@ class Github
         try {
             Download(URL, pathWithExtension)
         } catch as e {
-            MsgBox(e.msg)
+            MsgBox(e.Message . "`nURL:`n" URL)
         }
     }
     release() {
@@ -156,13 +167,13 @@ class Github
         return repo
     }
     /*
-    * @example 
+    * @example
     repoArray := Github.historicReleases()
-        repoArray[1].downloadURLs[1] => link
-        repoArray[1].version => string version data
-        repoArray[1].change_notes => string change notes
-        repoArray[1].date => date of release
-
+        repoArray[1].downloadURL => string | link
+        repoArray[1].version => string | version data
+        repoArray[1].change_notes => string | change notes
+        repoArray[1].date => string | date of release
+    
     * @returns (array of release objects) => [{
         downloadURL: "",
         version: "",
@@ -172,24 +183,24 @@ class Github
     */
     historicReleases() {
         repo_storage := []
-        url := "https://api.github.com/repos/" Github.storage.repo "/releases"
+        url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
         data := Github.jsonDownload(url)
         data := Jsons.Loads(&data)
         for release in data {
             for asset in release["assets"] {
-                repo_storage.Push(this.repoDistribution(release, asset))
+                repo_storage.Push(Github.repoDistribution(release, asset))
             }
         }
         return repo_storage
     }
-    repoDistribution(release, asset) {
-        repo := this.emptyRepoMap()
-        repo.version := release["tag_name"]
-        repo.change_notes := release["body"]
-        repo.name := asset["name"]
-        repo.date := asset["created_at"]
-        repo.downloadURL := asset["browser_download_url"]
-        return repo
+    static repoDistribution(release, asset) {
+        return {
+            downloadURL: asset["browser_download_url"],
+            version: release["tag_name"],
+            change_notes: release["body"],
+            date: asset["created_at"],
+            name: asset["name"]
+        }
     }
     downloadExtensionSplit(DL) {
         Arrays := StrSplit(DL, ".")
@@ -255,6 +266,7 @@ class Github
     }
 }
 
+
 ;;;; AHK v2 - https://github.com/TheArkive/JXON_ahk2
 ;MIT License
 ;Copyright (c) 2021 TheArkive
@@ -298,7 +310,7 @@ class Github
 
 ; originally posted by user coco on AutoHotkey.com
 ; https://github.com/cocobelgica/AutoHotkey-JSON
-class Jsons 
+class Jsons
 {
 
     static Loads(&src, args*) {
@@ -437,55 +449,54 @@ class Jsons
             is_array := (obj is Array)
 
             lvl += 1, out := "" ; Make #Warn happy
-        if (obj is Map || obj is Array){
-            for k, v in obj {
-                if IsObject(k) || (k == "")
-                    throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
-                
-                if !is_array ;// key ; ObjGetCapacity([k], 1)
-                    out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
-                
-                out .= Jsons.Dump(v, indent, lvl) ; value
-                    .  ( indent ? ",`n" . indt : "," ) ; token + indent
-            }
-        }else if IsObject(obj)
-            for k, v in obj.OwnProps() {
-                if IsObject(k) || (k == "")
-                    throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
-                out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
-                out .= Jsons.Dump(v, indent, lvl) ; value
-                    .  ( indent ? ",`n" . indt : "," ) ; token + indent
-            }
-        
-        ;Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
+            if (obj is Map || obj is Array) {
+                for k, v in obj {
+                    if IsObject(k) || (k == "")
+                        throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
 
-        if (out != "") {
-            out := Trim(out, ",`n" . indent)
-            if (indent != "")
-                out := "`n" . indt . out . "`n" . SubStr(indt, StrLen(indent)+1)
+                    if !is_array ;// key ; ObjGetCapacity([k], 1)
+                        out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
+
+                    out .= Jsons.Dump(v, indent, lvl) ; value
+                        . (indent ? ",`n" . indt : ",") ; token + indent
+                }
+            } else if IsObject(obj)
+                for k, v in obj.OwnProps() {
+                    if IsObject(k) || (k == "")
+                        throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
+                    out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
+                    out .= Jsons.Dump(v, indent, lvl) ; value
+                        . (indent ? ",`n" . indt : ",") ; token + indent
+                }
+
+            ;Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
+
+            if (out != "") {
+                out := Trim(out, ",`n" . indent)
+                if (indent != "")
+                    out := "`n" . indt . out . "`n" . SubStr(indt, StrLen(indent) + 1)
+            }
+
+            return is_array ? "[" . out . "]" : "{" . out . "}"
+
+        } Else If (obj is Number)
+            return obj
+        Else ; String
+            return escape_str(obj)
+
+        escape_str(obj) {
+            obj := StrReplace(obj, "\", "\\")
+            obj := StrReplace(obj, "`t", "\t")
+            obj := StrReplace(obj, "`r", "\r")
+            obj := StrReplace(obj, "`n", "\n")
+            obj := StrReplace(obj, "`b", "\b")
+            obj := StrReplace(obj, "`f", "\f")
+            obj := StrReplace(obj, "/", "\/")
+            obj := StrReplace(obj, '"', '\"')
+
+            return '"' obj '"'
         }
-        
-        return is_array ? "[" . out . "]" : "{" . out . "}"
-    
-    } Else If (obj is Number)
-        return obj
-    
-    Else ; String
-        return escape_str(obj)
-    
-    escape_str(obj) {
-        obj := StrReplace(obj,"\","\\")
-        obj := StrReplace(obj,"`t","\t")
-        obj := StrReplace(obj,"`r","\r")
-        obj := StrReplace(obj,"`n","\n")
-        obj := StrReplace(obj,"`b","\b")
-        obj := StrReplace(obj,"`f","\f")
-        obj := StrReplace(obj,"/","\/")
-        obj := StrReplace(obj,'"','\"')
-        
-        return '"' obj '"'
     }
-}
 }
 /************************************************************************
  * @file: WinHttpRequest.ahk
@@ -495,7 +506,7 @@ class Jsons
  * @version 0.0.18
  ***********************************************************************/
 
-class WinHttpRequest {
+class WinHttpRequest extends Github {
     static AutoLogonPolicy := {
         Always: 0,
         OnlyIfBypassProxy: 1,

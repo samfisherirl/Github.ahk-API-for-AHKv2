@@ -14,7 +14,7 @@ userResponse := MsgBox(
     	"`nWould you like to download?",, '36')
 
 if (userResponse = "Yes"){
-	Download(latest.downloadURLs[1], A_ScriptDir)
+	git.Download(latest.downloadURLs[1], A_ScriptDir "\download")
 	;latest.downloadURLs[] = array of release files - IE
 	;latest.downloadURLs[1] = url to => "releasev1.1.zip" 
 	;latest.downloadURLs[2] = url to => "releasev1.1.rar"
