@@ -36,7 +36,10 @@ class Github
     }
     /*
         return {
-            downloadURLs: [],
+            downloadURLs: [
+                            http://github.com/release.zip, 
+                            http://github.com/release.rar
+                        ],
             version: "",
             change_notes: "",
             date: "",
@@ -129,8 +132,8 @@ class Github
         pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
         try {
             Download(URL, pathWithExtension)
-        } catch {
-            Sleep(1)
+        } catch as e {
+            MsgBox(e.msg)
         }
     }
     release() {
@@ -152,16 +155,32 @@ class Github
         }
         return repo
     }
+    /*
+    * @example 
+    repoArray := Github.historicReleases()
+        repoArray[1].downloadURLs[1] => link
+        repoArray[1].version => string version data
+        repoArray[1].change_notes => string change notes
+        repoArray[1].date => date of release
+
+    * @returns (array of release objects) => [{
+        downloadURL: "",
+        version: "",
+        change_notes: "",
+        date: ""
+        }]
+    */
     historicReleases() {
+        repo_storage := []
         url := "https://api.github.com/repos/" Github.storage.repo "/releases"
         data := Github.jsonDownload(url)
         data := Jsons.Loads(&data)
         for release in data {
             for asset in release["assets"] {
-                Github.repo_storage.Push(this.repoDistribution(release, asset))
+                repo_storage.Push(this.repoDistribution(release, asset))
             }
         }
-        return Github.repo_storage
+        return repo_storage
     }
     repoDistribution(release, asset) {
         repo := this.emptyRepoMap()

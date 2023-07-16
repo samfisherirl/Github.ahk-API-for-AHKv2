@@ -7,12 +7,24 @@
 git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 
 latest := git.latest()
-; Download(latest.downloadURLs[1], A_ScriptDir) first download (good enough for single file releases)
+
+userResponse := MsgBox(
+    	git.Repository_Name "'s latest update is dated:`n"
+    	latest.date "`nVersion: " latest.version 
+    	"`nWould you like to download?",, '36')
+
+if (userResponse = "Yes"){
+	Download(latest.downloadURLs[1], A_ScriptDir)
+	;latest.downloadURLs[] = array of release files - IE
+	;latest.downloadURLs[1] = url to => "releasev1.1.zip" 
+	;latest.downloadURLs[2] = url to => "releasev1.1.rar"
+}
+
 /*
     git.latest() returns {
         downloadURLs: [],
         version: "",
-        body: "",
+        change_notes: "",
         date: ""
     }  
 */
@@ -35,11 +47,12 @@ git.Source(A_ScriptDir "\main.zip")
 ; enumerate ==ALL Historic Releases==
 repo_string := ""
 for repo in git.historicReleases() {
-    /*  downloadURL: "",
+    /* 
+        downloadURLs: [],
         version: "",
-        body: "",
-        date: "",
-        name: ""  */
+        change_notes: "",
+        date: ""  
+    */
     repo_string .= repo.name " version " repo.version " was released on " repo.date "`nUpdate notes: `n" 
     repo_string .= repo.change_notes "`nDownload Link: " repo.downloadURL "`n`n"
 }
