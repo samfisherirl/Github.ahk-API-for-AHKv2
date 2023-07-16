@@ -22,7 +22,7 @@ if (userResponse = "Yes"){
 	Download(latest.downloadURLs[1], A_ScriptDir)
 	;latest.downloadURLs[] = array of release files - IE
 	;latest.downloadURLs[1] = "releasev1.1.zip" 
-	;latest.downloadURLs[1] = "releasev1.1.rar"
+	;latest.downloadURLs[2] = "releasev1.1.rar"
 }
 
 
