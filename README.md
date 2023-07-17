@@ -14,15 +14,24 @@ git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 
 latest := git.latest()
 
+currentVersion := "v1"
+if currentVersion != latest.version 
+{
+    MsgBox "Time for an update, latest version is " 
+    . latest.version " updated on " latest.date "`nNotes:`n" latest.change_notes "`n`nLink: " latest.DownloadURLs[1]
+}
+
+
 userResponse := MsgBox(
     	git.Repository_Name "'s latest update is dated:`n"
     	latest.date "`nVersion: " latest.version 
     	"`nWould you like to download?",, '36')
+
 if (userResponse = "Yes"){
 	git.Download(latest.downloadURLs[1], A_ScriptDir "\download")
 	;latest.downloadURLs[] = array of release files - IE
-	;latest.downloadURLs[1] = "releasev1.1.zip" 
-	;latest.downloadURLs[2] = "releasev1.1.rar"
+	;latest.downloadURLs[1] = url to => "releasev1.1.zip" 
+	;latest.downloadURLs[2] = url to => "releasev1.1.rar"
 }
 
 
