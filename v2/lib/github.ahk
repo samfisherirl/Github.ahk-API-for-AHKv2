@@ -1,7 +1,33 @@
 ;credit: https://github.com/TheArkive/JXON_ahk2
 ;credit: https://github.com/thqby/ahk2_lib
 
-
+/**
+ * with this url as an example:
+ * https://github.com/TheArkive/JXON_ahk2
+ * @param Github_Username:="TheArkive"
+ * @param Repository_Name:="JXON_ahk2"
+ * @func this.latest() => object 
+ * {
+        downloadURLs: [],
+        version: "",
+        change_notes: "",
+        date: "",
+        name: ""
+    }
+    
+    * @func this.historicReleases() => array of releases
+    * [{
+        downloadURL: "",
+        version: "",
+        change_notes: "",
+        date: "",
+        name: ""
+    },{}]
+    * @func this.Download (path_to_save, url := "optional") => improves on download by handling the extension incase user doesnt provide the proper extension, as well as accounting for directories, allowing users to provide A_ScriptDir for example, and download with original file name
+    * @func this.repo_storage for i in repo_storage returns => i.downloadURL: "", i.version: "", i.change_notes: "", i.date: "",  i.name: ""methoi
+    * @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
+    * @func this.details() notes or body for the release with changes. 
+    */
 class Github
 {
     static repo_storage := []
@@ -11,19 +37,7 @@ class Github
         source_zip: ""
     }
     static data := false
-    /**
-     * with this url as an example:
-     * https://github.com/TheArkive/JXON_ahk2
-     * @param Github_Username:="TheArkive"
-     * @param Repository_Name:="JXON_ahk2"
-     * @func Download (path_to_save, url := "optional") using DownloadAsync.ahk
-     * @func this.historicReleases() returns Map() of all releases, accessed @ this.repo_storage
-     * @func this.repo_storage for i in repo_storage returns => i.downloadURL: "", i.version: "", i.change_notes: "", i.date: "",  i.name: ""methoi
-     * @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
-     * @func this.details() notes or body for the release with changes. 
-     * @func this.LatestReleaseMap for releaseName, releaseURL in this.LatestReleaseMap
-     * @func this.Version returns "v2.0.1" for example
-     */
+
     __New(Username, Repository_Name) {
         this.Username := Username
         this.Repository_Name := Repository_Name
@@ -274,40 +288,6 @@ class Github
 ;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 ;THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;
-; Example ===================================================================================
-; ===========================================================================================
-
-; Msgbox "The idea here is to create several nested arrays, save to text with jxon_dump(), and then reload the array with Jsons.Loads().  The resulting array should be the same.`r`n`r`nThis is what this example shows."
-; a := Map(), b := Map(), c := Map(), d := Map(), e := Map(), f := Map() ; Object() is more technically correct than {} but both will work.
-
-; d["g"] := 1, d["h"] := 2, d["i"] := ["purple","pink","pippy red"]
-; e["g"] := 1, e["h"] := 2, e["i"] := Map("1","test1","2","test2","3","test3")
-; f["g"] := 1, f["h"] := 2, f["i"] := [1,2,Map("a",1.0009,"b",2.0003,"c",3.0001)]
-
-; a["test1"] := "test11", a["d"] := d
-; b["test3"] := "test33", b["e"] := e
-; c["test5"] := "test55", c["f"] := f
-
-; myObj := Map()
-; myObj["a"] := a, myObj["b"] := b, myObj["c"] := c, myObj["test7"] := "test77", myObj["test8"] := "test88"
-
-; g := ["blue","green","red"], myObj["h"] := g ; add linear array for testing
-
-; q := Chr(34)
-; textData2 := Jxon_dump(myObj,4) ; ===> convert array to JSON
-; msgbox "JSON output text:`r`n===========================================`r`n(Should match second output.)`r`n`r`n" textData2
-
-; newObj := Jsons.Loads(&textData2) ; ===> convert json back to array
-
-; textData3 := Jxon_dump(newObj,4) ; ===> break down array into 2D layout again, should be identical
-; msgbox "Second output text:`r`n===========================================`r`n(should be identical to first output)`r`n`r`n" textData3
-
-; msgbox "textData2 = textData3:  " ((textData2=textData3) ? "true" : "false")
-
-; ===========================================================================================
-; End Example ; =============================================================================
-; ===========================================================================================
-
 ; originally posted by user coco on AutoHotkey.com
 ; https://github.com/cocobelgica/AutoHotkey-JSON
 class Jsons
