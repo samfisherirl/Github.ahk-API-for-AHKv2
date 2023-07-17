@@ -8,6 +8,14 @@ git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
 
 latest := git.latest()
 
+currentVersion := "v1"
+if currentVersion != latest.version 
+{
+    MsgBox "Time for an update, latest version is " 
+    . latest.version " updated on " latest.date "`nNotes:`n" latest.change_notes "`n`nLink: " latest.DownloadURLs[1]
+}
+
+
 userResponse := MsgBox(
     	git.Repository_Name "'s latest update is dated:`n"
     	latest.date "`nVersion: " latest.version 
@@ -61,7 +69,6 @@ MsgBox(repo_string)
 URL := git.searchReleases("v2")
 ; InStr search through each Release name first, then falls back on URL.
 ; First match returns the url for Download, then use that below:
-git.Download("path.zip", URL)
 
 /*
 Latest version, great for storing and checking for updates.
