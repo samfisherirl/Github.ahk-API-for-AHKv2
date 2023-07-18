@@ -1,5 +1,5 @@
 <h1>Github.ahk</h1>
-<h3>A Modular Library to Download latest releases from the github API, among other github timesavers. </h3>
+<h3>A modular library to download latest releases from the github API, among other github timesavers. </h3>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
  
 credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
