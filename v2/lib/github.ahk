@@ -7,15 +7,14 @@
  * @param Github_Username:="TheArkive"
  * @param Repository_Name:="JXON_ahk2"
  * @func this.latest() => object 
- * {
+ *  {
         downloadURLs: [],
         version: "",
         change_notes: "",
         date: "",
         name: ""
     }
-    
-    * @func this.historicReleases() => array of releases
+    * @func this.historicReleases() => array of release objects
     * [{
         downloadURL: "",
         version: "",
@@ -24,7 +23,6 @@
         name: ""
     },{}]
     * @func this.Download (path_to_save, url := "optional") => improves on download by handling the extension incase user doesnt provide the proper extension, as well as accounting for directories, allowing users to provide A_ScriptDir for example, and download with original file name
-    * @func this.repo_storage for i in repo_storage returns => i.downloadURL: "", i.version: "", i.change_notes: "", i.date: "",  i.name: ""methoi
     * @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
     * @func this.details() notes or body for the release with changes. 
     */
@@ -45,41 +43,21 @@ class Github
         this.url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
         this.fileType := ""
         ;filedelete, "1.json"
-        this.LatestReleaseMap := Map()
-        this.AssetList := []
         this.DownloadExtension := ""
-        this.olderReleases := Map()
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
     /*
-        return {
-            downloadURLs: [
-                            http://github.com/release.zip,
-                            http://github.com/release.rar
-                        ],
-            version: "",
-            change_notes: "",
-            date: "",
+    return {
+        downloadURLs: [
+            "http://github.com/release.zip",
+            "http://github.com/release.rar"
+                    ],
+        version: "",
+        change_notes: "",
+        date: "",
         }
     */
     latest() {
-        /*
-        static latest := {
-            downloadURL: "",
-            version: "",
-            change_notes: "",
-            date: "",
-            name: ""
-        }
-        
-        this.releaseURLCount := data["assets"].Length
-        this.AssetJ := data["assets"]
-        this.FirstAsset := data["assets"][1]["name"]
-        this.FirstAssetDL := data["assets"][1]["browser_download_url"]
-        this.ReleaseVersion := data["html_url"]
-        this.Version := data["tag_name"]
-        this.body := data["body"]
-        */
         data := Github.data ? Github.data : Github.processRepo(this.url)
         return Github.latestProp(data)
     }
@@ -108,7 +86,7 @@ class Github
     }
     /*
     loop releaseURLCount {
-        assetArray.Push(Jdata[A_Index]["browser_download_url"])
+        assetArray.Push(JsonData[A_Index]["browser_download_url"])
     }
     return => assetArray[]
     */
@@ -117,7 +95,7 @@ class Github
     }
     /*
     loop releaseURLCount {
-        assetMap.Set(Jdata[A_Index]["name"], Jdata[A_Index]["browser_download_url"])
+        assetMap.Set(jsonData[A_Index]["name"], jsonData[A_Index]["browser_download_url"])
     }
     return => assetMap()
     */
@@ -147,6 +125,9 @@ class Github
         this.Download(URL := Github.storage.source_zip, PathLocal)
     }
     /*
+    benefit over download() => handles users path, and applies appropriate extension. 
+    IE: If user provides (Path:=A_ScriptDir "\download.zip") but extension is .7z, extension is modified for the user. 
+    If user provides directory, name for file is applied from the path (download() will not).
     Download (
         @param URL to download
         @param Path where to save locally
@@ -181,14 +162,14 @@ class Github
         return repo
     }
     /*
-    * @example
+    @example
     repoArray := Github.historicReleases()
         repoArray[1].downloadURL => string | link
         repoArray[1].version => string | version data
         repoArray[1].change_notes => string | change notes
         repoArray[1].date => string | date of release
     
-    * @returns (array of release objects) => [{
+    @returns (array of release objects) => [{
         downloadURL: "",
         version: "",
         change_notes: "",
@@ -279,8 +260,6 @@ class Github
         return pathWithExtension
     }
 }
-
-
 ;;;; AHK v2 - https://github.com/TheArkive/JXON_ahk2
 ;MIT License
 ;Copyright (c) 2021 TheArkive
@@ -292,7 +271,6 @@ class Github
 ; https://github.com/cocobelgica/AutoHotkey-JSON
 class Jsons
 {
-
     static Loads(&src, args*) {
         key := "", is_key := false
         stack := [tree := []]
