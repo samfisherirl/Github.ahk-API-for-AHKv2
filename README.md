@@ -88,7 +88,6 @@ git.Source(A_ScriptDir "\main.zip")
         git.tag() ; returns only version number, ie "v1.2333", ideally for checking if update is necessary
         anyname := new Github("any_username/any_repo") 
         git := new Github("samfisherirl/github.ahk") ; example using this repository
-#
 ```
  
   
