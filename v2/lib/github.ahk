@@ -59,7 +59,7 @@ class Github
     */
     latest() {
         data := Github.data ? Github.data : Github.processRepo(this.url)
-        return Github.latestProp(data)
+        return this.latestProp(data)
     }
     static processRepo(url) {
         Github.storage.source_zip := "https://github.com/" Github.storage.repo "/archive/refs/heads/main.zip"
@@ -67,21 +67,29 @@ class Github
         data := Github.data
         return Jsons.Loads(&data)
     }
-    static latestProp(data) {
+    latestProp(data) {
         for i in data {
+            baseData := i
+            assetMap := i["assets"]
+            date := i["created_at"]
             if i["assets"].Length > 0 {
                 length := i["assets"].Length
-                assetMap := i["assets"]
-                baseData := i
+                releaseArray := Github.distributeReleaseArray(length, assetMap)
+                break
+            }
+            else {
+                releaseArray := ["https://github.com/" this.usernamePlusRepo "/archive/" i["tag_name"] ".zip"]
+                ;source url = f"https://github.com/{repo_owner}/{repo_name}/archive/{release_tag}.zip"
                 break
             }
         }
-        releaseArray := Github.distributeReleaseArray(length, assetMap)
+        ;move release array to first if
+        ;then add source
         return {
             downloadURLs: releaseArray,
             version: baseData["tag_name"],
             change_notes: baseData["body"],
-            date: assetMap[1]["created_at"],
+            date: date
         }
     }
     /*
