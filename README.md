@@ -7,74 +7,112 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 ![image](https://github.com/samfisherirl/github.ahk/assets/98753696/536823be-20e6-43f2-a612-c780953e2bdf)
 
 # AHK v2 Method list 
+
+
+### grab release object 
  
 ```autohotkey
 
-git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
+usr := "samfisherirl"
+repo := "Github.ahk-API-for-AHKv2"
 
-latest := git.latest()
+#Include %A_ScriptDir%\lib\github.ahk
 
-currentVersion := "v1"
-if currentVersion != latest.version 
-{
-    MsgBox "Time for an update, latest version is " 
-    . latest.version " updated on " latest.date "`nNotes:`n" latest.change_notes "`n`nLink: " latest.DownloadURLs[1]
-}
-
-
-userResponse := MsgBox(
-    	git.Repository_Name "'s latest update is dated:`n"
-    	latest.date "`nVersion: " latest.version 
-    	"`nWould you like to download?",, '36')
-
-if (userResponse = "Yes"){
-	git.Download(latest.downloadURLs[1], A_ScriptDir "\download")
-	;latest.downloadURLs[] = array of release files - IE
-	;latest.downloadURLs[1] = url to => "releasev1.1.zip" 
-	;latest.downloadURLs[2] = url to => "releasev1.1.rar"
-}
-
-
-/*
-    git.latest() returns {
-        downloadURLs: [],
-        version: "",
-        change_notes: "",
-        date: ""
-    }  
-*/
-for url in latest.downloadURLs {
-    if InStr(url, ".zip") {
-        git.download(url, A_ScriptDir) 
-        break
-    }
-}
-; object := Gitub(Username, Repository)
+latestObj := Github.latest(usr, repo)
 
 ```
 
-`enumerate historic releases`
+### Check version data
+ 
 ```autohotkey
+
+currentVersion := "v1"
+if currentVersion != latestObj.version 
+{
+    MsgBox "Time for an update, latest version is " 
+    . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
+    . latestObj.change_notes "`n`nLink: " latestObj.DownloadURLs[1]
+}
+
+```
+
+### Download release
+ 
+```autohotkey
+
+userResponse := MsgBox(
+    	 "Github.ahk-API-for-AHKv2's latest update is dated:`n"
+    	latestObj.date "`nVersion: " latestObj.version 
+    	"`nWould you like to download?",, '36')
+
+if (userResponse = "Yes"){
+	Github.Download(latestObj.downloadURLs[1], A_ScriptDir "\download")
+	;latestObj.downloadURLs[] = array of release files - IE
+	;latestObj.downloadURLs[1] = url to => "releasev1.1.zip" 
+	;latestObj.downloadURLs[2] = url to => "releasev1.1.rar"
+}
+
+for url in latestObj.downloadURLs {
+    if InStr(url, ".zip") {
+        Github.download(url, A_ScriptDir) 
+        break
+    }
+}
+
+```
+
+### Check version data
+ 
+```autohotkey
+
+currentVersion := "v1"
+if currentVersion != latestObj.version 
+{
+    MsgBox "Time for an update, latest version is " 
+    . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
+    . latestObj.change_notes "`n`nLink: " latestObj.DownloadURLs[1]
+}
+
+```
+
+### Check version data
+ 
+```autohotkey
+
+currentVersion := "v1"
+if currentVersion != latestObj.version 
+{
+    MsgBox "Time for an update, latest version is " 
+    . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
+    . latestObj.change_notes "`n`nLink: " latestObj.DownloadURLs[1]
+}
+
+```
+
+### Download source data and historic releases
+ 
+```autohotkey
+
+Github.Source(usr, repo, A_ScriptDir "\main.zip")
+; download main branch source code
+
+; Multiple Assets use-case
 ; enumerate ==ALL Historic Releases==
 repo_string := ""
-for repo in git.historicReleases() 
-{
-        ; downloadURL: "",
-        ; version: "",
-        ; body: "",
-        ; date: "",
-        ; name: ""  
+for repo in Github.historicReleases(usr, repo) {
+    /* 
+        downloadURLs: [],
+        version: "",
+        change_notes: "",
+        date: ""  
+    */
     repo_string .= repo.name " version " repo.version " was released on " repo.date "`nUpdate notes: `n" 
     repo_string .= repo.change_notes "`nDownload Link: " repo.downloadURL "`n`n"
 }
 MsgBox(repo_string)
-```
 
-`current source zip`
-```autohotkey
-git.Source(A_ScriptDir "\main.zip")
 
-```
+``` 
 
 # AHK v1 Method list:
         
