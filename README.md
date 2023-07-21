@@ -1,4 +1,4 @@
-<h1>Github.ahk</h1>
+# Github.ahk 
 <h3>A modular library to download latest releases from the github API, among other github timesavers. </h3>
 <p class="has-line-data" data-line-start="1" data-line-end="2">
  
@@ -7,9 +7,9 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 ![image](https://github.com/samfisherirl/Github.ahk-API-for-AHKv2/assets/98753696/5f655888-1b12-40fa-8844-33eaec1c6d41)
 
 
-# AHK v2 Method list 
+## AHK v2 Method list 
 
-## Grab release object 
+### Grab release object 
  
 ```autohotkey
 
@@ -22,7 +22,7 @@ latestObj := Github.latest(usr, repo)
 
 ```
 
-## Check version data
+### Check version data
  
 ```autohotkey
 
@@ -36,7 +36,7 @@ if currentVersion != latestObj.version
 
 ```
 
-## Download release
+### Download release
  
 ```autohotkey
 
@@ -61,7 +61,7 @@ for url in latestObj.downloadURLs {
 
 ```
 
-## Download source data and historic releases
+### Download source data and historic releases
  
 ```autohotkey
 
@@ -86,7 +86,7 @@ MsgBox(repo_string)
 
 ``` 
 
-# AHK v1 Method list:
+## AHK v1 Method list:
         
 ```autohotkey
         using this url as an example: https://github.com/samfisherirl/github.ahk
