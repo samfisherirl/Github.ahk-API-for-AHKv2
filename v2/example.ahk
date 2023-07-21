@@ -1,44 +1,36 @@
 ﻿;using this repo as an example: https://github.com/samfisherirl/Github.ahk-API-for-AHKv2
 ;credit: https://github.com/TheArkive/JXON_ahk2
 ;credit: https://github.com/thqby/ahk2_lib
+usr := "samfisherirl"
+repo := "Github.ahk-API-for-AHKv2"
 
 #Include %A_ScriptDir%\lib\github.ahk
 
-git := Github("samfisherirl", "Github.ahk-API-for-AHKv2")
-
-latest := git.latest()
+latestObj := Github.latest(usr, repo)
 
 currentVersion := "v1"
-if currentVersion != latest.version 
+if currentVersion != latestObj.version 
 {
     MsgBox "Time for an update, latest version is " 
-    . latest.version " updated on " latest.date "`nNotes:`n" latest.change_notes "`n`nLink: " latest.DownloadURLs[1]
+    . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
+    . latestObj.change_notes "`n`nLink: " latestObj.DownloadURLs[1]
 }
 
-
 userResponse := MsgBox(
-    	git.Repository_Name "'s latest update is dated:`n"
-    	latest.date "`nVersion: " latest.version 
+    	 "Github.ahk-API-for-AHKv2's latest update is dated:`n"
+    	latestObj.date "`nVersion: " latestObj.version 
     	"`nWould you like to download?",, '36')
 
 if (userResponse = "Yes"){
-	git.Download(latest.downloadURLs[1], A_ScriptDir "\download")
-	;latest.downloadURLs[] = array of release files - IE
-	;latest.downloadURLs[1] = url to => "releasev1.1.zip" 
-	;latest.downloadURLs[2] = url to => "releasev1.1.rar"
+	Github.Download(latestObj.downloadURLs[1], A_ScriptDir "\download")
+	;latestObj.downloadURLs[] = array of release files - IE
+	;latestObj.downloadURLs[1] = url to => "releasev1.1.zip" 
+	;latestObj.downloadURLs[2] = url to => "releasev1.1.rar"
 }
 
-/*
-    git.latest() returns {
-        downloadURLs: [],
-        version: "",
-        change_notes: "",
-        date: ""
-    }  
-*/
-for url in latest.downloadURLs {
+for url in latestObj.downloadURLs {
     if InStr(url, ".zip") {
-        git.download(url, A_ScriptDir) 
+        Github.download(url, A_ScriptDir) 
         break
     }
 }
@@ -48,13 +40,13 @@ for url in latest.downloadURLs {
 ; just a name can be passed. extension will be handled.
 ; this will get saved to A_ScriptDir
 
-git.Source(A_ScriptDir "\main.zip")
+Github.Source(usr, repo, A_ScriptDir "\main.zip")
 ; download main branch source code
 
 ; Multiple Assets use-case
 ; enumerate ==ALL Historic Releases==
 repo_string := ""
-for repo in git.historicReleases() {
+for repo in Github.historicReleases(usr, repo) {
     /* 
         downloadURLs: [],
         version: "",
@@ -66,7 +58,6 @@ for repo in git.historicReleases() {
 }
 MsgBox(repo_string)
 
-URL := git.searchReleases("v2")
 ; InStr search through each Release name first, then falls back on URL.
 ; First match returns the url for Download, then use that below:
 

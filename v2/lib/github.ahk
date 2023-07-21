@@ -1,49 +1,47 @@
 ;credit: https://github.com/TheArkive/JXON_ahk2
 ;credit: https://github.com/thqby/ahk2_lib
 
-/**
+/*
  * with this url as an example:
  * https://github.com/TheArkive/JXON_ahk2
  * @param Github_Username:="TheArkive"
  * @param Repository_Name:="JXON_ahk2"
  * @func this.latest() => object 
- *  {
-        downloadURLs: [],
-        version: "",
-        change_notes: "",
-        date: "",
-        name: ""
-    }
-    * @func this.historicReleases() => array of release objects
-    * [{
-        downloadURL: "",
-        version: "",
-        change_notes: "",
-        date: "",
-        name: ""
-    },{}]
-    * @func this.Download (path_to_save, url := "optional") => improves on download by handling the extension incase user doesnt provide the proper extension, as well as accounting for directories, allowing users to provide A_ScriptDir for example, and download with original file name
-    * @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
-    * @func this.details() notes or body for the release with changes. 
-    */
+*  {
+    downloadURLs: [], 
+    version: "", 
+    change_notes: "", 
+    date: "", 
+    name: "" 
+* }
+* @func this.historicReleases() => array of release objects
+* [{
+    downloadURL: "",
+    version: "",
+    change_notes: "",
+    date: "",
+    name: ""
+},{}]
+* @func this.Download (url, path_to_save := "optional") => improves on download by handling the extension incase user doesnt provide the proper extension, as well as accounting for directories, allowing users to provide A_ScriptDir for example, and download with original file name
+* @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
+* @func this.details() notes or body for the release with changes. 
+*/
 class Github
 {
-    static repo_storage := []
-
+    static source_zip := ""
+    static url := false
+    static usernamePlusRepo := false
     static storage := {
         repo: "",
         source_zip: ""
     }
     static data := false
 
-    __New(Username, Repository_Name) {
-        this.Username := Username
-        this.Repository_Name := Repository_Name
-        this.usernamePlusRepo := Trim(Username) "/" Trim(Repository_Name)
-        this.url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
-        this.fileType := ""
+    static build(Username, Repository_Name) {
+        Github.usernamePlusRepo := Trim(Username) "/" Trim(Repository_Name)
+        Github.source_zip := "https://github.com/" Github.usernamePlusRepo "/archive/refs/heads/main.zip"
+        return "https://api.github.com/repos/" Github.usernamePlusRepo "/releases"
         ;filedelete, "1.json"
-        this.DownloadExtension := ""
         ;this.Filetype := data["assets"][1]["browser_download_url"]
     }
     /*
@@ -57,17 +55,55 @@ class Github
         date: "",
         }
     */
-    latest() {
-        data := Github.data ? Github.data : Github.processRepo(this.url)
-        return this.latestProp(data)
+    static latest(Username, Repository_Name) {
+        url := Github.build(Username, Repository_Name)
+        data := Github.processRepo(url)
+        return Github.latestProp(data)
     }
+    /*
     static processRepo(url) {
-        Github.storage.source_zip := "https://github.com/" Github.storage.repo "/archive/refs/heads/main.zip"
+        Github.source_zip := "https://github.com/" Github.usernamePlusRepo "/archive/refs/heads/main.zip"
         Github.data := Github.jsonDownload(url)
         data := Github.data
         return Jsons.Loads(&data)
     }
-    latestProp(data) {
+    */
+    static processRepo(url) {
+        Github.source_zip := "https://github.com/" Github.usernamePlusRepo "/archive/refs/heads/main.zip"
+        Github.data := Github.jsonDownload(url)
+        data := Github.data
+        return Jsons.Loads(&data)
+    }
+    /*
+    @example
+    repoArray := Github.historicReleases()
+        repoArray[1].downloadURL => string | link
+        repoArray[1].version => string | version data
+        repoArray[1].change_notes => string | change notes
+        repoArray[1].date => string | date of release
+    
+    @returns (array of release objects) => [{
+        downloadURL: "",
+        version: "",
+        change_notes: "",
+        date: ""
+        }]
+    */
+    static historicReleases(Username, Repository_Name) {
+        url := Github.build(Username, Repository_Name)
+        data := Github.processRepo(url)
+        repo_storage := []
+        url := "https://api.github.com/repos/" Github.usernamePlusRepo "/releases"
+        data := Github.jsonDownload(url)
+        data := Jsons.Loads(&data)
+        for release in data {
+            for asset in release["assets"] {
+                repo_storage.Push(Github.repoDistribution(release, asset))
+            }
+        }
+        return repo_storage
+    }
+    static latestProp(data) {
         for i in data {
             baseData := i
             assetMap := i["assets"]
@@ -78,7 +114,7 @@ class Github
                 break
             }
             else {
-                releaseArray := ["https://github.com/" this.usernamePlusRepo "/archive/" i["tag_name"] ".zip"]
+                releaseArray := ["https://github.com/" Github.usernamePlusRepo "/archive/" i["tag_name"] ".zip"]
                 ;source url = f"https://github.com/{repo_owner}/{repo_name}/archive/{release_tag}.zip"
                 break
             }
@@ -98,9 +134,6 @@ class Github
     }
     return => assetArray[]
     */
-    releaseURLArray() {
-        return Github.distributeReleaseArray(this.releaseURLCount, Github.data["assets"])
-    }
     /*
     loop releaseURLCount {
         assetMap.Set(jsonData[A_Index]["name"], jsonData[A_Index]["browser_download_url"])
@@ -129,8 +162,14 @@ class Github
             return assetArray
         }
     }
-    Source(Pathlocal) {
-        this.Download(URL := Github.storage.source_zip, PathLocal)
+    /*
+    download the latest main.zip source zip
+    */
+    static Source(Username, Repository_Name, Pathlocal := A_ScriptDir) {
+        url := Github.build(Username, Repository_Name)
+        data := Github.processRepo(url)
+
+        Github.Download(URL := Github.source_zip, PathLocal)
     }
     /*
     benefit over download() => handles users path, and applies appropriate extension. 
@@ -141,25 +180,16 @@ class Github
         @param Path where to save locally
     )
     */
-    Download(URL := this.FirstAssetDL, PathLocal := A_ScriptDir) {
-        releaseExtension := this.downloadExtensionSplit(URL)
-        pathWithExtension := this.handleUserPath(PathLocal, releaseExtension)
+    static Download(URL, PathLocal := A_ScriptDir) {
+        releaseExtension := Github.downloadExtensionSplit(URL)
+        pathWithExtension := Github.handleUserPath(PathLocal, releaseExtension)
         try {
             Download(URL, pathWithExtension)
         } catch as e {
             MsgBox(e.Message . "`nURL:`n" URL)
         }
     }
-    release() {
-        return this.FirstAssetDL
-    }
-    name() {
-        return this.FirstAssetName
-    }
-    details() {
-        return this.body
-    }
-    emptyRepoMap() {
+    static emptyRepoMap() {
         repo := {
             downloadURL: "",
             version: "",
@@ -169,33 +199,7 @@ class Github
         }
         return repo
     }
-    /*
-    @example
-    repoArray := Github.historicReleases()
-        repoArray[1].downloadURL => string | link
-        repoArray[1].version => string | version data
-        repoArray[1].change_notes => string | change notes
-        repoArray[1].date => string | date of release
-    
-    @returns (array of release objects) => [{
-        downloadURL: "",
-        version: "",
-        change_notes: "",
-        date: ""
-        }]
-    */
-    historicReleases() {
-        repo_storage := []
-        url := "https://api.github.com/repos/" this.usernamePlusRepo "/releases"
-        data := Github.jsonDownload(url)
-        data := Jsons.Loads(&data)
-        for release in data {
-            for asset in release["assets"] {
-                repo_storage.Push(Github.repoDistribution(release, asset))
-            }
-        }
-        return repo_storage
-    }
+
     static repoDistribution(release, asset) {
         return {
             downloadURL: asset["browser_download_url"],
@@ -205,30 +209,13 @@ class Github
             name: asset["name"]
         }
     }
-    downloadExtensionSplit(DL) {
+    static downloadExtensionSplit(DL) {
         Arrays := StrSplit(DL, ".")
-        this.filetype := Trim(Arrays[Arrays.Length])
-        return this.filetype
-    }
-    getVersion() {
-        url := StrSplit(this.ReleaseVersion, "/")
-        version := url[8]
-        return version
-        ; msgbox % this.j[1].assets.name
-        ; return this.j[1].assets.name
-    }
-    searchReleases(providedSearch) {
-        for assetName, DLURL in this.LatestReleaseMap {
-            if InStr(assetName, providedSearch) {
-                return DLURL
-            }
-            else if InStr(DLURL, providedSearch) {
-                return DLURL
-            }
-        }
+        filetype := Trim(Arrays[Arrays.Length])
+        return filetype
     }
 
-    handleUserPath(PathLocal, releaseExtension) {
+    static handleUserPath(PathLocal, releaseExtension) {
         if InStr(PathLocal, "\") {
             pathParts := StrSplit(PathLocal, "\")
             FileName := pathParts[pathParts.Length]
