@@ -9,7 +9,7 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 # AHK v2 Method list 
 
 
-### grab release object 
+### Grab release object 
  
 ```autohotkey
 
