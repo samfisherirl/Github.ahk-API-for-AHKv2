@@ -4,12 +4,12 @@
  
 credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 
-![image](https://github.com/samfisherirl/github.ahk/assets/98753696/536823be-20e6-43f2-a612-c780953e2bdf)
+![image](https://github.com/samfisherirl/Github.ahk-API-for-AHKv2/assets/98753696/5f655888-1b12-40fa-8844-33eaec1c6d41)
+
 
 # AHK v2 Method list 
 
-
-### Grab release object 
+## Grab release object 
  
 ```autohotkey
 
@@ -22,7 +22,7 @@ latestObj := Github.latest(usr, repo)
 
 ```
 
-### Check version data
+## Check version data
  
 ```autohotkey
 
@@ -36,7 +36,7 @@ if currentVersion != latestObj.version
 
 ```
 
-### Download release
+## Download release
  
 ```autohotkey
 
@@ -61,7 +61,7 @@ for url in latestObj.downloadURLs {
 
 ```
 
-### Check version data
+## Check version data
  
 ```autohotkey
 
@@ -75,7 +75,7 @@ if currentVersion != latestObj.version
 
 ```
 
-### Check version data
+## Check version data
  
 ```autohotkey
 
@@ -89,7 +89,7 @@ if currentVersion != latestObj.version
 
 ```
 
-### Download source data and historic releases
+## Download source data and historic releases
  
 ```autohotkey
 
