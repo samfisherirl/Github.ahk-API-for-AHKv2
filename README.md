@@ -61,34 +61,6 @@ for url in latestObj.downloadURLs {
 
 ```
 
-## Check version data
- 
-```autohotkey
-
-currentVersion := "v1"
-if currentVersion != latestObj.version 
-{
-    MsgBox "Time for an update, latest version is " 
-    . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
-    . latestObj.change_notes "`n`nLink: " latestObj.DownloadURLs[1]
-}
-
-```
-
-## Check version data
- 
-```autohotkey
-
-currentVersion := "v1"
-if currentVersion != latestObj.version 
-{
-    MsgBox "Time for an update, latest version is " 
-    . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
-    . latestObj.change_notes "`n`nLink: " latestObj.DownloadURLs[1]
-}
-
-```
-
 ## Download source data and historic releases
  
 ```autohotkey
