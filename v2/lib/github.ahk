@@ -461,57 +461,17 @@ class Jsons
  * @version 0.0.18
  ***********************************************************************/
 
-class WinHttpRequest extends Github {
-    static AutoLogonPolicy := {
-        Always: 0,
-        OnlyIfBypassProxy: 1,
-        Never: 2
+class WinHttpRequest {
+    static AutoLogonPolicy := { Always: 0, OnlyIfBypassProxy: 1, Never: 2 }
+    static Option := { UserAgentString: 0, URL: 1, URLCodePage: 2, EscapePercentInURL: 3, SslErrorIgnoreFlags: 4, SelectCertificate: 5, EnableRedirects: 6, UrlEscapeDisable: 7, UrlEscapeDisableQuery: 8, SecureProtocols: 9, EnableTracing: 10, RevertImpersonationOverSsl: 11, EnableHttpsToHttpRedirects: 12, EnablePassportAuthentication: 13, MaxAutomaticRedirects: 14, MaxResponseHeaderSize: 15, MaxResponseDrainSize: 16, EnableHttp1_1: 17, EnableCertificateRevocationCheck: 18, RejectUserpwd: 19
     }
-    static Option := {
-        UserAgentString: 0,
-        URL: 1,
-        URLCodePage: 2,
-        EscapePercentInURL: 3,
-        SslErrorIgnoreFlags: 4,
-        SelectCertificate: 5,
-        EnableRedirects: 6,
-        UrlEscapeDisable: 7,
-        UrlEscapeDisableQuery: 8,
-        SecureProtocols: 9,
-        EnableTracing: 10,
-        RevertImpersonationOverSsl: 11,
-        EnableHttpsToHttpRedirects: 12,
-        EnablePassportAuthentication: 13,
-        MaxAutomaticRedirects: 14,
-        MaxResponseHeaderSize: 15,
-        MaxResponseDrainSize: 16,
-        EnableHttp1_1: 17,
-        EnableCertificateRevocationCheck: 18,
-        RejectUserpwd: 19
+    static PROXYSETTING := { PRECONFIG: 0, DIRECT: 1, PROXY: 2
     }
-    static PROXYSETTING := {
-        PRECONFIG: 0,
-        DIRECT: 1,
-        PROXY: 2
+    static SETCREDENTIALSFLAG := { SERVER: 0, PROXY: 1
     }
-    static SETCREDENTIALSFLAG := {
-        SERVER: 0,
-        PROXY: 1
+    static SecureProtocol := { SSL2: 0x08, SSL3: 0x20, TLS1: 0x80, TLS1_1: 0x200, TLS1_2: 0x800, All: 0xA8
     }
-    static SecureProtocol := {
-        SSL2: 0x08,
-        SSL3: 0x20,
-        TLS1: 0x80,
-        TLS1_1: 0x200,
-        TLS1_2: 0x800,
-        All: 0xA8
-    }
-    static SslErrorFlag := {
-        UnknownCA: 0x0100,
-        CertWrongUsage: 0x0200,
-        CertCNInvalid: 0x1000,
-        CertDateInvalid: 0x2000,
-        Ignore_All: 0x3300
+    static SslErrorFlag := { UnknownCA: 0x0100, CertWrongUsage: 0x0200, CertCNInvalid: 0x1000, CertDateInvalid: 0x2000, Ignore_All: 0x3300
     }
 
     __New(UserAgent := unset) {
