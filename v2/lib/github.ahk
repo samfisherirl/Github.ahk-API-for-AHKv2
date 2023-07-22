@@ -70,8 +70,7 @@ class Github
     */
     static processRepo(url) {
         Github.source_zip := "https://github.com/" Github.usernamePlusRepo "/archive/refs/heads/main.zip"
-        Github.data := Github.jsonDownload(url)
-        data := Github.data
+        data := Github.jsonDownload(url)
         return Jsons.Loads(&data)
     }
     /*
