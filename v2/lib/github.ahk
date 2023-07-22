@@ -2,29 +2,32 @@
 ;credit: https://github.com/thqby/ahk2_lib
 
 /*
- * with this url as an example:
- * https://github.com/TheArkive/JXON_ahk2
- * @param Github_Username:="TheArkive"
- * @param Repository_Name:="JXON_ahk2"
- * @func this.latest() => object 
-*  {
-    downloadURLs: [], 
-    version: "", 
-    change_notes: "", 
-    date: "", 
-    name: "" 
-* }
-* @func this.historicReleases() => array of release objects
-* [{
-    downloadURL: "",
-    version: "",
-    change_notes: "",
-    date: "",
-    name: ""
-},{}]
-* @func this.Download (url, path_to_save := "optional") => improves on download by handling the extension incase user doesnt provide the proper extension, as well as accounting for directories, allowing users to provide A_ScriptDir for example, and download with original file name
-* @func this.searchReleases ("keyword") search through all release names for keyword first, falling back to searching all urls. Returns URL to download for reuse in Download method
-* @func this.details() notes or body for the release with changes. 
+    @source https://github.com/samfisherirl/Github.ahk-API-for-AHKv2
+    @method Github.latest(Username,Repository_Name)
+
+    return {
+        downloadURLs: [
+            "http://github.com/release.zip",
+            "http://github.com/release.rar"
+                    ],
+        version: "",
+        change_notes: "",
+        date: "",
+        }
+        
+    @method Github.historicReleases(Username,Repository_Name)
+        array of objects => [{
+            downloadURL: "",
+            version: "",
+            change_notes: "",
+            date: ""
+        }]
+    @func this.Download(url,path)
+        improves on download(): 
+        - if user provides wrong extension, function will apply proper extension
+        - allows user to provide directory 
+        example:    Providing A_ScriptDir to Download will throw error
+                    Providing A_ScriptDir to Github.Download() will supply Download() with release name 
 */
 class Github
 {
