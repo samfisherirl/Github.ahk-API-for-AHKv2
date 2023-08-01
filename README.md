@@ -18,8 +18,9 @@ repo := "Github.ahk-API-for-AHKv2"
 
 #Include %A_ScriptDir%\lib\github.ahk
 
+;simple
 latestObj := Github.latest(usr, repo)
-
+latestObj.downloadURLs[1]
 ```
 
 ### Check version data
