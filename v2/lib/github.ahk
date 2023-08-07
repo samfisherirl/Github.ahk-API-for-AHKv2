@@ -58,23 +58,25 @@ class Github
         date: "",
         }
     */
-    static latest(Username, Repository_Name) {
-        url := Github.build(Username, Repository_Name)
-        data := Github.processRepo(url)
-        return Github.latestProp(data)
+    static latest(Username := "", Repository_Name := "") {
+        if (Username != "") & (Repository_Name != "") {
+            url := Github.build(Username, Repository_Name)
+            data := Github.processRepo(url)
+            return Github.latestProp(data)
+        }
     }
     /*
     static processRepo(url) {
         Github.source_zip := "https://github.com/" Github.usernamePlusRepo "/archive/refs/heads/main.zip"
         Github.data := Github.jsonDownload(url)
         data := Github.data
-        return Jsons.Loads(&data)
+        return Jsons.Load(&data)
     }
     */
     static processRepo(url) {
         Github.source_zip := "https://github.com/" Github.usernamePlusRepo "/archive/refs/heads/main.zip"
         data := Github.jsonDownload(url)
-        return Jsons.Loads(&data)
+        return Jsons.Load(&data)
     }
     /*
     @example
@@ -97,7 +99,7 @@ class Github
         repo_storage := []
         url := "https://api.github.com/repos/" Github.usernamePlusRepo "/releases"
         data := Github.jsonDownload(url)
-        data := Jsons.Loads(&data)
+        data := Jsons.Load(&data)
         for release in data {
             for asset in release["assets"] {
                 repo_storage.Push(Github.repoDistribution(release, asset))
@@ -266,9 +268,11 @@ class Github
 ;
 ; originally posted by user coco on AutoHotkey.com
 ; https://github.com/cocobelgica/AutoHotkey-JSON
-class Jsons
-{
-    static Loads(&src, args*) {
+
+; https://github.com/cocobelgica/AutoHotkey-JSON
+class Jsons {
+
+    static Load(&src, args*) {
         key := "", is_key := false
         stack := [tree := []]
         next := '"{[01234567890-tfn'
@@ -303,7 +307,7 @@ class Jsons
             is_array := (obj is Array)
 
             if i := InStr("{[", ch) { ; start new object / map?
-                val := (i = 1) ? Map() : Array()    ; ahk v2
+                val := (i = 1) ? Map() : Array()	; ahk v2
 
                 is_array ? obj.Push(val) : obj[key] := val
                 stack.InsertAt(1, val)
@@ -373,20 +377,18 @@ class Jsons
                 next := obj == tree ? "" : is_array ? ",]" : ",}"
             }
         }
+
         return tree[1]
     }
     static Dump(obj, indent := "", lvl := 1) {
         if IsObject(obj) {
-            ;if !obj.__Class = "Map" {
-            ;    convertedObject := Map()
-            ;    for k, v in obj.OwnProps() {
-            ;        convertedObject.Set(k, v)
-            ;    }
-            ;    obj := convertedObject
-            ;}
-            ;If !(obj is Array || obj is Map || obj is String || obj is Number)
-            ;    throw Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
-
+            if obj.__Class = "Object" {
+                obj := Jsons.convertObj(obj)
+            } else if not (obj is Array || obj is Map || obj is String || obj is Number) && obj.base.__New {
+                obj := Jsons.convertObj(obj)
+            }
+            If !(obj is Array || obj is Map || obj is String || obj is Number)
+                throw Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
             if IsInteger(indent)
             {
                 if (indent < 0)
@@ -404,27 +406,16 @@ class Jsons
             is_array := (obj is Array)
 
             lvl += 1, out := "" ; Make #Warn happy
-            if (obj is Map || obj is Array) {
-                for k, v in obj {
-                    if IsObject(k) || (k == "")
-                        throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
+            for k, v in obj {
+                ; if IsObject(k) || (k == "")
+                    ;  throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
 
-                    if !is_array ;// key ; ObjGetCapacity([k], 1)
-                        out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
-
-                    out .= Jsons.Dump(v, indent, lvl) ; value
-                        . (indent ? ",`n" . indt : ",") ; token + indent
-                }
-            } else if IsObject(obj)
-                for k, v in obj.OwnProps() {
-                    if IsObject(k) || (k == "")
-                        throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
+                if !is_array ;// key ; ObjGetCapacity([k], 1)
                     out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
-                    out .= Jsons.Dump(v, indent, lvl) ; value
-                        . (indent ? ",`n" . indt : ",") ; token + indent
-                }
 
-            ;Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
+                out .= Jsons.Dump(v, indent, lvl) ; value
+                    . (indent ? ",`n" . indt : ",") ; token + indent
+            }
 
             if (out != "") {
                 out := Trim(out, ",`n" . indent)
@@ -451,6 +442,26 @@ class Jsons
 
             return '"' obj '"'
         }
+    }
+    static ConvertObjectToMap(InputObject) {
+        if IsObject(InputObject) {
+            if InputObject.__Class = "Map" {
+                return InputObject
+            }
+            else {
+                return Jsons.convertObj(InputObject)
+            }
+        }
+        else {
+            return InputObject
+        }
+    }
+    static convertObj(obj) {
+        convertedObject := Map()
+        for k, v in obj.OwnProps() {
+            convertedObject.Set(k, v)
+        }
+        return convertedObject
     }
 }
 /************************************************************************
