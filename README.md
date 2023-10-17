@@ -20,7 +20,7 @@ repo := "Github.ahk-API-for-AHKv2"
 
 ;simple
 latestObj := Github.latest(usr, repo)
-latestObj.downloadURLs[1]
+Nsgbox latestObj.downloadURLs[1]
 ; array has all downloads under release tag, for source code view below
 ;latestObj.downloadURLs[1] = url to => "releasev1.1.zip" 
 ;latestObj.downloadURLs[2] = url to => "releasev1.1.rar"
