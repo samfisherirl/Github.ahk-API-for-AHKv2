@@ -9,7 +9,7 @@ credit to JXON v2 creator https://github.com/TheArkive/JXON_ahk2
 
 ## AHK v2 Method list 
 
-### Grab release object 
+### Quick start - Download a release
  
 ```autohotkey
 
@@ -21,6 +21,9 @@ repo := "Github.ahk-API-for-AHKv2"
 ;simple
 latestObj := Github.latest(usr, repo)
 latestObj.downloadURLs[1]
+; array has all downloads
+;latestObj.downloadURLs[1] = url to => "releasev1.1.zip" 
+;latestObj.downloadURLs[2] = url to => "releasev1.1.rar"
 ```
 
 ### Check version data
