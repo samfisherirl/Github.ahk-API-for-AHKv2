@@ -1,4 +1,5 @@
 ;;;; AHK v2 - https://github.com/TheArkive/JXON_ahk2
+
 ;MIT License
 ;Copyright (c) 2021 TheArkive
 ;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -41,10 +42,11 @@
 
 ; originally posted by user coco on AutoHotkey.com
 ; https://github.com/cocobelgica/AutoHotkey-JSON
-class Jsons 
-{
 
-    static Loads(&src, args*) {
+
+class Json
+{
+    static Load(&src, args*) {
         key := "", is_key := false
         stack := [tree := []]
         next := '"{[01234567890-tfn'
@@ -63,14 +65,14 @@ class Jsons
                     , (next == "") ? ["Extra data", ch := SubStr(src, pos)][1]
                     : (next == "'") ? "Unterminated string starting at"
                         : (next == "\") ? "Invalid \escape"
-                            : (next == ":") ? "Expecting ':' delimiter"
-                                : (next == '"') ? "Expecting object key enclosed in double quotes"
-                                    : (next == '"}') ? "Expecting object key enclosed in double quotes or object closing '}'"
-                                        : (next == ",}") ? "Expecting ',' delimiter or object closing '}'"
-                                            : (next == ",]") ? "Expecting ',' delimiter or array closing ']'"
-                                                : ["Expecting JSON value(string, number, [true, false, null], object or array)"
-                                                , ch := SubStr(src, pos, (SubStr(src, pos) ~= "[\]\},\s]|$") - 1)][1]
-                                                , ln, col, pos)
+                        : (next == ":") ? "Expecting ':' delimiter"
+                        : (next == '"') ? "Expecting object key enclosed in double quotes"
+                        : (next == '"}') ? "Expecting object key enclosed in double quotes or object closing '}'"
+                        : (next == ",}") ? "Expecting ',' delimiter or object closing '}'"
+                        : (next == ",]") ? "Expecting ',' delimiter or array closing ']'"
+                        : ["Expecting JSON value(string, number, [true, false, null], object or array)"
+                            , ch := SubStr(src, pos, (SubStr(src, pos) ~= "[\]\},\s]|$") - 1)][1]
+                    , ln, col, pos)
 
                 throw Error(msg, -1, ch)
             }
@@ -180,53 +182,54 @@ class Jsons
             is_array := (obj is Array)
 
             lvl += 1, out := "" ; Make #Warn happy
-        if (obj is Map || obj is Array){
-            for k, v in obj {
-                if IsObject(k) || (k == "")
-                    throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
-                
-                if !is_array ;// key ; ObjGetCapacity([k], 1)
-                    out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
-                
-                out .= Jsons.Dump(v, indent, lvl) ; value
-                    .  ( indent ? ",`n" . indt : "," ) ; token + indent
-            }
-        }else if IsObject(obj)
-            for k, v in obj.OwnProps() {
-                if IsObject(k) || (k == "")
-                    throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
-                out .= (ObjGetCapacity([k]) ? Jsons.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
-                out .= Jsons.Dump(v, indent, lvl) ; value
-                    .  ( indent ? ",`n" . indt : "," ) ; token + indent
-            }
-        
-        ;Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
+            if (obj is Map || obj is Array) {
+                for k, v in obj {
+                    if IsObject(k) || (k == "")
+                        throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
 
-        if (out != "") {
-            out := Trim(out, ",`n" . indent)
-            if (indent != "")
-                out := "`n" . indt . out . "`n" . SubStr(indt, StrLen(indent)+1)
+                    if !is_array ;// key ; ObjGetCapacity([k], 1)
+                        out .= (ObjGetCapacity([k]) ? json.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
+
+                    out .= json.Dump(v, indent, lvl) ; value
+                        . (indent ? ",`n" . indt : ",") ; token + indent
+                }
+            } else if IsObject(obj)
+                for k, v in obj.OwnProps() {
+                    if IsObject(k) || (k == "")
+                        throw Error("Invalid object key.", -1, k ? Format("<Object at 0x{:p}>", ObjPtr(obj)) : "<blank>")
+                    out .= (ObjGetCapacity([k]) ? json.Dump(k) : escape_str(k)) (indent ? ": " : ":") ; token + padding
+                    out .= json.Dump(v, indent, lvl) ; value
+                        . (indent ? ",`n" . indt : ",") ; token + indent
+                }
+
+            ;Error("Object type not supported.", -1, Format("<Object at 0x{:p}>", ObjPtr(obj)))
+
+            if (out != "") {
+                out := Trim(out, ",`n" . indent)
+                if (indent != "")
+                    out := "`n" . indt . out . "`n" . SubStr(indt, StrLen(indent) + 1)
+            }
+
+            return is_array ? "[" . out . "]" : "{" . out . "}"
+
+        } Else If (obj is Number)
+            return obj
+        Else ; String
+            return escape_str(obj)
+
+        escape_str(obj) {
+            obj := StrReplace(obj, "\", "\\")
+            , obj := StrReplace(obj, "`t", "\t")
+            , obj := StrReplace(obj, "`r", "\r")
+            , obj := StrReplace(obj, "`n", "\n")
+            , obj := StrReplace(obj, "`b", "\b")
+            , obj := StrReplace(obj, "`f", "\f")
+            , obj := StrReplace(obj, "/", "\/")
+            , obj := StrReplace(obj, '"', '\"')
+
+            return '"' obj '"'
         }
-        
-        return is_array ? "[" . out . "]" : "{" . out . "}"
-    
-    } Else If (obj is Number)
-        return obj
-    
-    Else ; String
-        return escape_str(obj)
-    
-    escape_str(obj) {
-        obj := StrReplace(obj,"\","\\")
-        obj := StrReplace(obj,"`t","\t")
-        obj := StrReplace(obj,"`r","\r")
-        obj := StrReplace(obj,"`n","\n")
-        obj := StrReplace(obj,"`b","\b")
-        obj := StrReplace(obj,"`f","\f")
-        obj := StrReplace(obj,"/","\/")
-        obj := StrReplace(obj,'"','\"')
-        
-        return '"' obj '"'
     }
-}
+    static Loads(params*) => Json.Load(params*)
+    static Dumps(params*) => Json.Dump(params*)
 }
