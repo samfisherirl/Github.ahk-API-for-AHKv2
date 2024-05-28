@@ -9,7 +9,7 @@ repo := "Github.ahk-API-for-AHKv2"
 latestObj := Github.latest(usr, repo)
 
 currentVersion := "v1"
-if currentVersion != latestObj.version 
+if currentVersion != latestObj.version
 {
     MsgBox "Time for an update, latest version is " 
     . latestObj.version " updated on " latestObj.date "`nNotes:`n" 
